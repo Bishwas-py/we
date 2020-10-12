@@ -1,0 +1,23 @@
+
+
+
+
+
+/* POPUP BOX STYLE */
+@media (max-width: 1066px){
+    .modal-body .form-group .col-sm-2{
+        float:none;
+        width:100%;
+    }
+}
+@media (max-width: 1066px){
+    .modal-body .form-group .col-sm-10 {
+        width: 100%;
+    }
+}
+/*popbox style end*/
+
+
+
+
+

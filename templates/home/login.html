@@ -1,0 +1,24 @@
+<div class="col-md-6 login-form-1">
+    <h3>Log in the school</h3>
+    <form action='/accounts/log-in' method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            School's Username
+            <input type="text" name='username' class="form-control" minlength=3 placeholder="Username *" required>
+
+        </div>
+        <div class="form-group">
+            Password
+            <input type="password" name='password' class="form-control" placeholder="Password *" required>
+
+        </div>
+        <div class="form-group">
+            {{error}}<br>
+            <input type="submit" class="btnSubmit btn-block" value="Login" />
+        </div>
+        <div class="form-group">
+            <a href="#" class="ForgetPwd">Forget Password?</a>
+        </div>
+        <span style='font-size:48px;text-align:center;margin-top:19px;'>OR</span>
+    </form>
+</div>

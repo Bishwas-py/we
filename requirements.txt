@@ -1,0 +1,4 @@
+django
+nepali_datetime
+adbs
+Pillow

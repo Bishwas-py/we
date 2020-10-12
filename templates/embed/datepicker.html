@@ -1,0 +1,124 @@
+<!-- NepaliDatePicker ::>> -->
+
+
+
+<div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
+    <select class="form-control" id="Year" name='year' onclick="get_max_np_date()">
+        <option disabled selected>Year</option>
+        <script>
+            var years;
+            var req_date = new Date();
+            var max_year = req_date.getFullYear();
+            for (years = 1978; years < (max_year+58); years++) {
+                document.write("<option value='" + years + "'>" + years + "</option>");
+            }
+
+        </script>
+    </select>
+</div>
+
+<div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
+    <select class="form-control" id="Month" name='month' onclick="get_max_np_date()">
+        <option selected disabled>Month</option>
+        <option value="1">Baishakh</option>
+        <option value="2">Jestha</option>
+        <option value="3">Aashadha</option>
+        <option value="4">Shrawan</option>
+        <option value="5">Bhadra</option>
+        <option value="6">Ashwin</option>
+        <option value="7">Kartik</option>
+        <option value="8">Mangsir</option>
+        <option value="9">Paush</option>
+        <option value="10">Magh</option>
+        <option value="11">Falgun</option>
+        <option value="12">Chaitra</option>
+    </select>
+</div>
+
+
+<div class="form-group col-sm-3 d-inline-block" style="padding: 0px;">
+    <select class="form-control" id="Day" name='day'>
+        <option disabled selected>Day</option>
+        
+        </select>
+</div>
+<script>
+    var max_day;
+    var DayData = [];
+    function get_max_np_date() { //Return the maximum Days in Nepali Date System (Bikram Sambat)
+        var get_year = document.getElementById('Year') 
+        var get_month = document.getElementById('Month'); 
+        
+        year = get_year.options[get_year.selectedIndex].value;
+        month = get_month.options[get_month.selectedIndex].value;
+        if (year && month){
+            $.ajax({
+                url: 'max-np-day',
+                type: 'get',
+                data: {
+
+                'year':year,
+                'month':month
+
+                },
+
+
+                success: function (data) {
+                    DayElm = document.getElementById("Day")
+                    function appendDay(){
+                        max_day = data;
+                        var days;
+                        for (days = 1; days <= max_day; days++) {
+                            var optionElm = document.createElement("option");
+                            var daysNode = document.createTextNode(days);
+                            optionElm.appendChild(daysNode)
+                            DayElm.appendChild(optionElm)
+                        }
+                    }
+                    if (DayData.length == 0){
+                        DayElm.innerHTML ="";
+                        DayData.push(data);
+                        appendDay();
+                        console.log('Exp: '+1+', Initial Pushed Data:'+ data);
+                    }
+                    else if (data == DayData[DayData.length-1]){
+                        console.log('Exp: '+2+', Data Length:', DayData[DayData.length-1]+ ', Data:  '+data);
+                    }
+                    else if (data != DayData[DayData.length-1] ){
+                        var get_day = document.getElementById('Day');
+                        setIndex = get_day.selectedIndexs
+                        setValue = get_day.value
+                        DayElm.innerHTML ="";
+
+                        if (get_day.length == data){
+                            appendDay();
+                            DayData.push(data);
+                            get_day.value = setValue;
+                            console.log('Exp: '+3.1+', LENGTH: '+old_value+  ', Data: '+data)
+                        }
+                        else{
+                            appendDay();
+                            
+                            if (setValue > data){
+                                get_day.value = data;
+                            }
+                            else{
+                                get_day.value = setValue;
+                            }
+                            console.log('Exp: '+3.2+',  Data: '+data)
+
+                        }
+                        console.log(3);
+                    }
+                }
+                
+                })
+        }
+
+
+    };
+    </script>
+
+<!-- NepaliDatePicker <<:: -->
+
+

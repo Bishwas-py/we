@@ -1,0 +1,101 @@
+{% extends 'panel/panel.html' %}
+{% load static %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+  </div>
+  <div class="card-body">
+    <div class="">
+      <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+      
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid"
+              aria-describedby="dataTable_info" style="width: 100%;">
+              <thead>
+                <tr role="row">
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Photo: activate to sort column ascending" style="width: 21px;"><span style='display:none;'>Photo</span></th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 58px;">
+                    Name</th>
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Address: activate to sort column ascending" style="width: 31px;">Address</th>
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Start date: activate to sort column ascending" style="width: 68px;">Class</th>
+                  <th class="Class" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Father: activate to sort column ascending" style="width: 67px;">Father</th>
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Mother: activate to sort column ascending" style="width: 67px;">Mother</th>
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Occupation: activate to sort column ascending" style="width: 67px;">Occupation</th>
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Admission: activate to sort column ascending" style="width: 67px;">Admission</th>
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Phone Number: activate to sort column ascending" style="width: 67px;">Phone Number</th>
+                  <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                    aria-label="Date of Birth: activate to sort column ascending" style="width: 67px;">Date of Birth
+                  </th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+
+                  <th rowspan="1" colspan="1">Name</th>
+                  <th rowspan="1" colspan="1">Photo</th>
+                  <th rowspan="1" colspan="1">Address</th>
+                  <th rowspan="1" colspan="1">Class</th>
+                  <th rowspan="1" colspan="1">Father</th>
+                  <th rowspan="1" colspan="1">Mother</th>
+                  <th rowspan="1" colspan="1">Occupation</th>
+                  <th rowspan="1" colspan="1">Addmission</th>
+                  <th rowspan="1" colspan="1">Phone Number</th>
+                  <th rowspan="1" colspan="1">Date of Birth</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                {% for student in student_details %}
+                <tr role="row" class="even">
+                  <td> <img src='{{student.student_photo.url}}' style='width:63px;'
+                    alt='{{student.student_name}}: {{student.student_photo.size}}Bytes'
+                    title='{{student_details.student_name}}'> <span
+                    class='d-none'>{{student.student_photo.size}}</span></td>
+                  <td class="sorting_1">{{student.student_name}}</td>
+                  <td> {{student.student_address}} </td>
+                  <td> {{student.student_class}} </td>
+                  <td> {{student.student_father}} </td>
+                  <td> {{student.student_mother}} </td>
+                  <td> {{student.student_fam_occupation}} </td>
+                  <td> {{student.student_admission_date}} </td>
+                  <td> {{student.student_phone_number}} </td>
+                  <td> {{student.student_date_of_birth}} </td>
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  th, td{
+    white-space: nowrap;
+  }
+  .table-responsive {
+    overflow-x: none;
+  }
+</style>
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'student/dataTableDm.js' %}"></script>
+
+{%endblock%}

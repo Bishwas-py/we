@@ -1,0 +1,33 @@
+{% extends 'navbar.html' %}
+{% block content %}
+
+<div class='signopt'>
+
+    <h1 style='font-size:20px;font-weight:bold;text-align:center;'>
+        Welcome to School Management System by <a href='https://bishwas.webmatrices.com'>Bishwas Bhandari</a>...
+    </h1>
+    <h3 style='font-size:13px;text-align:center;'>Under Development</h3>
+    <script>
+        if ('{{ signin }}' != ''){
+            document.write('<p style="text-align:center;color:red;">{{ signin }}</p>')
+        }
+    </script>
+
+    <!------ Include the above in your HEAD tag ---------->
+
+
+    <!--      LOG INTO SCHOOL HERE         -->
+    <div class="container login-container">
+        <div class="row">
+                <!-- LOGIN logs a School User -->
+                {% include 'home/login.html' %}
+
+                <!-- SIGN-IN adds a School -->
+                {% include 'home/signin.html' %}
+        </div>
+    </div>
+</div>
+
+
+</div>
+{% endblock %}

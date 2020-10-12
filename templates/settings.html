@@ -1,0 +1,25 @@
+{% extends 'sidebar.html' %}
+{% block content %}
+
+<h2>Welcome to settings</h2>
+<hr>
+<h3>Create Classes</h3>
+
+<form method="POST" action="/settings" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="classInput">Class or Grade</label>
+        <input type="text" class="form-control" id="classInput" name='classes' aria-describedby="classHelp"
+            placeholder="Example: Kindergarten, 1, 2, 3, etc.">
+        <small id="classHelp" class="form-text text-muted">
+            Create the class <strong><em>{{sdata.sname}}</em></strong>has.
+        </small>
+    </div>
+    <button type="submit" role="button" class="btn btn-primary btn-block">Submit</button>
+</form>
+{% for classes in student_classes %}
+<p>'{{classes.class_list}}'</p>
+{% endfor %}
+
+{% endblock %}

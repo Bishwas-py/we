@@ -1,0 +1,62 @@
+<div class="col-md-6 login-form-2">
+    <h3>Add a school</h3>
+    <script>
+        if ('{{used_or_not}}' != '') {
+            null;
+        }
+        else {
+            document.write('{{used_or_not}}');
+        }
+
+    </script>
+    {{used_or_not}}
+    <form action="/accounts/sign-in" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            School's Name
+            <input type="text" maxlength=50 name='school_name' minlength=7 class="form-control"
+                placeholder="School Name *" required>
+        </div>
+        <div class="form-group">
+            School's Email
+            <input type="email" class="form-control" name='email' placeholder="Email *" value="" required>
+        </div>
+        <div class="form-group">
+            Principal's Name
+            <input type="text" maxlength=55 name='principal' minlength=7 class="form-control"
+                placeholder="Principal's Name *" required>
+        </div>
+        <div class="form-group">
+            Address of School
+            <input type="text" maxlength=105 name='address' minlength=7 class="form-control"
+                placeholder="School's Address *" required>
+        </div>
+        <div class="form-group">
+            <span class='d-block'>Date of Establishment</span>
+            {% include 'embed/datepicker.html' %}
+
+        </div>
+        <div class="form-group">
+            Number of students
+            <input type="number" name='student_number' class="form-control" placeholder="1000 *" required>
+        </div>
+        <div class="form-group">
+            School's Website or Facebook Page
+            <input type="url" name='school_website' minlength=7 class="form-control" value="https:// ">
+        </div>
+        <div class="form-group">
+            Choose Username
+            <input type="text" maxlength=15 name='username' minlength=3 class="form-control" placeholder="Username *"
+                value="" required>
+        </div>
+        <div class="form-group">
+            Choose A Password
+            <input type="password" class="form-control" name='password' placeholder="Password *" value="" required>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btnSubmit btn-block" value="Add School" />
+        </div>
+
+    </form>
+</div>
