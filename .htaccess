@@ -1,0 +1,43 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/globallo/sms.webmatrices.com"
+PassengerBaseURI "/"
+PassengerPython "/home/globallo/virtualenv/sms.webmatrices.com/3.7/bin/python3.7"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
+
+# Any changes to the directives between these markers will be overwritten.
+<IfModule mod_rewrite.c>
+
+RewriteEngine on 
+RewriteCond %{HTTPS} !=on [NC] [OR] 
+RewriteCond %{SERVER_PORT} !443 
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+# BEGIN LiteSpeed
+# The directives (lines) between `BEGIN LiteSpeed` and `END LiteSpeed` are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+<IfModule Litespeed>
+SetEnv noabort 1
+</IfModule>
+# END LiteSpeed
+# BEGIN ShortPixelWebp
+# The directives (lines) between `BEGIN ShortPixelWebp` and `END ShortPixelWebp` are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+# END ShortPixelWebp
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
