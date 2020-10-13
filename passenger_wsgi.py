@@ -1,0 +1,1 @@
+from smsys.wsgi import application
