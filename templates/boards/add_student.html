@@ -1,126 +1,178 @@
-{% extends 'panel/panel.html' %}
-{% load static %}
-{% block content %}
+{% extends 'panel/panel.html' %} {% load static %} {% block content %}
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Add Students Here</h6>
-        </div>
-    <div class='card-body'>
-<form method='POST' action='/addstd' enctype="multipart/form-data">
-    {% csrf_token %}
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Add Students Here</h6>
+  </div>
+  <div class="card-body">
+    <form method="POST" action="/addstd" enctype="multipart/form-data">
+      {% csrf_token %}
 
-    <div class="form-group">
+      <div class="form-group">
         <label class="control-label" for="student_name">
-            Student's Name:
+          Student's Name:
         </label>
         <div>
-            <input type="text" class="form-control" placeholder="Student Name" id='student_name'
-                name="student_name">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Student Name"
+            id="student_name"
+            name="student_name"
+          />
         </div>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <label class="control-label" for="student_address">
-            Student's Address:
+          Student's Address:
         </label>
         <div>
-            <input class='form-control' id='student_address' placeholder="Address of student" name='student_address'
-                required />
+          <input
+            class="form-control"
+            id="student_address"
+            placeholder="Address of student"
+            name="student_address"
+            required
+          />
         </div>
-    </div>
-    <div class="dropdown show">
-
+      </div>
+      <div class="dropdown show">
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-
+          <a class="dropdown-item" href="#">Action</a>
         </div>
-    </div>
+      </div>
 
-    <div class="form-group">
-        <label class="control-label" for="stcls">
-            Current Class:
-        </label>
+      <div class="form-group">
+        <label class="control-label" for="stcls"> Current Class: </label>
         <div>
-            <select class="form-control" id="sel1" name='stdcls' required>
-                <option value="" disabled selected>Choose your option</option>
-                {% for st in stc %}
-                <option value="{{st.cList}}">{{st.cList}}</option>
-                {% endfor %}
-            </select>
+          <select class="form-control" id="sel1" name="stdcls" required>
+            <option disabled selected>Choose your option</option>
+            {% for Class in student_class %}
+            <option value="{{Class.class_list}}">{{Class.class_list}}</option>
+            {% endfor %}
+          </select>
         </div>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label class="control-label" for="student_father">
-            Father's Name:
+          Father's Name:
         </label>
         <div>
-            <input class='form-control' id='student_father' name='student_father' placeholder="Father's Name"
-                required />
+          <input
+            class="form-control"
+            id="student_father"
+            name="student_father"
+            placeholder="Father's Name"
+            required
+          />
         </div>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label class="control-label" for="student_mother">
-            Mother's Name:
+          Mother's Name:
         </label>
         <div>
-            <input class='form-control' id='student_mother' name='student_mother' placeholder="Mother's Name"
-                required />
+          <input
+            class="form-control"
+            id="student_mother"
+            name="student_mother"
+            placeholder="Mother's Name"
+            required
+          />
         </div>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label class="control-label" for="student_fam_occupation">
-            Family's occupation:
+          Family's occupation:
         </label>
         <div>
-            <input type="text" class="form-control" id="student_fam_occupation" placeholder="Family Occupation"
-                name="student_fam_occupation">
+          <input
+            type="text"
+            class="form-control"
+            id="student_fam_occupation"
+            placeholder="Family Occupation"
+            name="student_fam_occupation"
+          />
         </div>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label class="control-label" for="student_admission_date">
-            Addmission Date:
+          Addmission Date:
         </label>
         <div>
-            <input class='form-control' id='student_admission_date' type='date' name='stdadate' required />
+          <input
+            class="form-control"
+            id="student_admission_date"
+            type="date"
+            name="stdadate"
+            required
+          />
         </div>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <label class="control-label" for="student_photo">
-            Student's photo:
+          Student's photo:
         </label>
         <div>
-            <input id='student_photo' type="file" name='student_photo' accept="image/x-png,image/gif,image/jpeg"
-                required />
+          <input
+            id="student_photo"
+            type="file"
+            name="student_photo"
+            accept="image/x-png,image/gif,image/jpeg"
+            required
+          />
         </div>
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label class="control-label" for="student_phone_number">
-            Phone Number:
-        </label>
-        <div><input class='form-control' type="tel" id='student_phone_number'
-                placeholder="Phone Number" name='student_phone_number' required />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label" for="student_date_of_birth">
-            Date of Birth:
+          Phone Number:
         </label>
         <div>
-            <input class='form-control' type='date' id='student_date_of_birth' name='student_date_of_birth' required />
+          <input
+            class="form-control"
+            type="tel"
+            id="student_phone_number"
+            placeholder="Phone Number"
+            name="student_phone_number"
+            required
+          />
         </div>
-    </div>  
-    <button type="submit" role='button' class="btn btn-primary btn-block col-sm-2 d-inline-block">Submit</button>
-    <a href="/student/student"<button type="button" role='button' class="btn btn-danger btn-block col-sm-2 d-inline-block">Close
-        (x)</button></a>
-</form>
-</div>
-</div>
+      </div>
 
+      <div class="form-group">
+        <label class="control-label" for="student_date_of_birth">
+          Date of Birth:
+        </label>
+        <div>
+          <input
+            class="form-control"
+            type="date"
+            id="student_date_of_birth"
+            name="student_date_of_birth"
+            required
+          />
+        </div>
+      </div>
 
+      <button
+        type="submit"
+        role="button"
+        class="btn btn-primary btn-block col-sm-2 d-inline-block"
+      >
+        Submit
+      </button>
+      <a href="/student/student" class="btn btn-danger btn-icon-split">
+        <span class="icon text-white-50">
+          <i class="fas fa-window-close"></i>
+        </span>
+        <span class="text">Close</span>
+      </a>
+    </form>
+  </div>
+</div>
 
 {% endblock %}

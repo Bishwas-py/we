@@ -4,7 +4,7 @@ from settings.models import student_class
 from accounts.models import school_details
 # Create your models here.
 class student_details(models.Model):
-    username = models.ForeignKey(school_details, on_delete=models.CASCADE, null=True)
+    connect_school = models.ForeignKey(school_details, on_delete=models.CASCADE, null=True)
     # school_details = models.ForeignKey(schoolDetails, on_delete=models.CASCADE)
     student_name = models.CharField(max_length=150, null=True)
     student_short_name = models.CharField(max_length=150, null=True)

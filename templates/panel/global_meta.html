@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load fontawesome_5 %}{% fontawesome_5_static %} 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="{% static 'panel/sb-admin-2.css' %}" rel="stylesheet">
 <title>{{school_details.school_name}} - WebSMS</title>
@@ -10,10 +10,11 @@
  
 
 
-<!-- Bootstrap Starts::> -->
+<!-- Bootstrap and Styles Starts::> -->
 
-<!-- CSS only -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<!-- GLOBAL CSS::> -->
+<link rel='stylesheet' href='{% static "global/bootstrap-v4.1.1.css" %}'>
+<link rel='stylesheet' href='{% static "global/sb-admin.css" %}'>
 <!-- Bootstrap <:: Ends-->
 <!-- JS, Popper.js, and jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

@@ -7,15 +7,16 @@ from accounts.models import school_details
 def remove_student(request, ssname):
     username=request.session['username']
     password=request.session['password']
-    chSTD = student_details.objects.get(username=username, password=password, ssname=ssname)
-    chSTD.stpht.delete(save=True)
-    chSTD.delete()
+    student_data = student_details.objects.get(username=username, password=password, ssname=ssname)
+    student_data.stpht.delete(save=True)
+    student_data.delete()
     return redirect ('student')
+
 
 def update_student(request, ssname):
     username = request.session['username']
     password=request.session['password']
-    chSTD = student_details.objects.get(
+    student_data = student_details.objects.get(
         username=username,
         password=password,
         ssname=ssname)
@@ -28,27 +29,27 @@ def update_student(request, ssname):
     except:
         None
     
-    student_address = request.POST.get(f'{chSTD.ssname}1')
-    student_class = request.POST.get(f'{chSTD.ssname}2')
-    student_fam_occupation = request.POST.get(f'{chSTD.ssname}3')
-    student_phone_num = request.POST.get(f'{chSTD.ssname}4')
-    stpht = request.FILES.get(f'{chSTD.ssname}5')
+    student_address = request.POST.get(f'{student_data.ssname}1')
+    student_class = request.POST.get(f'{student_data.ssname}2')
+    student_fam_occupation = request.POST.get(f'{student_data.ssname}3')
+    student_phone_num = request.POST.get(f'{student_data.ssname}4')
+    stpht = request.FILES.get(f'{student_data.ssname}5')
     if stadd != None:
-        chSTD.stadd = stadd
-        chSTD.save()
+        student_data.stadd = stadd
+        student_data.save()
     if student_classls != None:
         cLass.cList = student_classls
-        chSTD.save()
+        student_data.save()
     if stfo != None:
-        chSTD.stfo = stfo
-        chSTD.save()
+        student_data.stfo = stfo
+        student_data.save()
     if stpnum != None:
-        chSTD.stpnum = stpnum
-        chSTD.save()
+        student_data.stpnum = stpnum
+        student_data.save()
     if stpht != None:
-        chSTD.stpht.delete(save=True)
-        chSTD.stpht = stpht
-        chSTD.save()
+        student_data.stpht.delete(save=True)
+        student_data.stpht = stpht
+        student_data.save()
     return redirect('student')
 
 
@@ -56,8 +57,8 @@ def student(request):
     username=request.session['username']
     password=request.session['password']
     school_Details = school_details.objects.get(username=username, password=password)
-    student_Class = school_details.objects.filter(username=school_Details)
-    student_Details = student_details.objects.filter(username=school_Details)
+    student_Class = student_class.objects.filter(connect_school=school_Details)
+    student_Details = student_details.objects.filter(connect_school=school_Details)
     required_dict = {
         'school_details':school_Details,
         'student_class':student_Class,
@@ -69,9 +70,9 @@ def student(request):
 
 
 def add_student(request):
+    username=request.session['username']
+    password=request.session['password']
     if request.method == 'POST':
-        username = request.session['username']
-        password = request.session['password']
         school_details = school_details.objects.get(
             username=username,
             password=password
@@ -111,6 +112,11 @@ def add_student(request):
         student_data.save()
         return redirect('student')
     elif request.method == 'GET':
-        return render(request, 'boards/add_student.html')
+        from settings.models import student_class
+        from accounts.models import school_details
+
+        school_Details = school_details.objects.get(username=username, password=password)
+        Classes = student_class.objects.filter(connect_school=school_Details)
+        return render(request, 'boards/add_student.html', {'student_class':Classes, 'school_details':school_Details})
     # except:
     #     return redirect('home')
