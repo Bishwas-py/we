@@ -1,1 +1,0 @@
-web: guicorm smsys.wsgi --log-file -
