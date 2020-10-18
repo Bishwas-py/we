@@ -1,4 +1,4 @@
-{% extends 'panel/panel.html' %} {% load static %} {% block content %}
+{% extends 'layouts/panel.html' %} {% load static %} {% block content %}
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Add Students Here</h6>
@@ -43,13 +43,18 @@
 
       <div class="form-group">
         <label class="control-label" for="stcls"> Current Class: </label>
-        <div>
+        <div class="col-xl-5 d-inline-block" style="padding: 0px">
           <select class="form-control" id="sel1" name="stdcls" required>
             <option disabled selected>Choose your option</option>
             {% for Class in student_class %}
             <option value="{{Class.class_list}}">{{Class.class_list}}</option>
             {% endfor %}
           </select>
+        </div>
+        <div class="col-xl-2 d-inline-block" style="padding: 0px">
+          <a href="/settings" class="btn btn-info btn-circle">
+            <i class="fas fa-plus"></i>
+          </a>
         </div>
       </div>
 

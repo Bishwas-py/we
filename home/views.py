@@ -9,23 +9,23 @@ from settings.models import student_class
 # Create your views here.
 def home(request):
     try:
-        required_school_data = school_details.objects.filter(
+        school_data = school_details.objects.filter(
             username = request.session['username'],
             password = request.session['password']
         )
 
-        if required_school_data:
+        if school_data:
             username = request.session['username']
             password = request.session['password']
 
             dictonary_to_pass ={
                 'student_class':student_class.objects.filter(
-                    username=required_school_data,
+                    connect_school=school_data,
                 ),
-                'school_details': required_school_data[0],
+                'school_details': school_data[0],
 
             }
-            return render(request, "boards/dashboard.html", dictonary_to_pass)
+            return render(request, "themes/dashboard.html", dictonary_to_pass)
     except:
         return render(request,'home/home.html')
         

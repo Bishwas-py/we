@@ -4,8 +4,18 @@
     "python.linting.enabled": true,
     "python.linting.pylamaEnabled": false,
     "editor.fontSize": 12,
-    "files.autoSave": "afterDelay",
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     "git.ignoreLimitWarning": true,
+    "beautify.language": {
+        "html": [
+            "htm",
+            "html",
+            "django-html"
+        ]
+    },
+    "editor.copyWithSyntaxHighlighting": false,
+
+
+
 }

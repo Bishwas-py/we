@@ -2,10 +2,10 @@
 $(document).ready(function() {
     $('#dataTable').DataTable({
         "autoWidth": false,
-        "scrollY":        "1000px",
+        "scrollY": "1000px",
         "scrollX": true,
         "scrollCollapse": true,
     });
-    
-    
-  });
+
+
+});

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  {% include 'panel/global_meta.html' %}
+  {% include 'layouts/global_meta.html' %}
 </head>
 
 <body id="page-top">
@@ -12,7 +12,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    {% include 'panel/sidebar.html' %}
+    {% include 'layouts/sidebar.html' %}
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -22,7 +22,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        {% include 'panel/navbar.html' %}
+        {% include 'layouts/navbar.html' %}
         <div class="container-fluid">
 
           {% block content %}
@@ -59,11 +59,11 @@
 
   <!-- Page level plugins -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-  <script src="{% static 'panel/js/chart_data/datatables-demo.js' %}"></script>
-  <script src="{% static 'panel/js/chart_data/chart-bar-demo.js' %}"></script>
+  <script src="{% static 'layouts/js/chart_data/datatables-demo.js' %}"></script>
+  <script src="{% static 'layouts/js/chart_data/chart-bar-demo.js' %}"></script>
   <!-- Page level custom scripts -->
-  <script src="{% static 'panel/js/chart_data/chart-area-demo.js' %}"></script>
-  <script src="{% static 'panel/js/chart_data/chart-pie-demo.js' %}"></script>
+  <script src="{% static 'layouts/js/chart_data/chart-area-demo.js' %}"></script>
+  <script src="{% static 'layouts/js/chart_data/chart-pie-demo.js' %}"></script>
 
 
 </body>

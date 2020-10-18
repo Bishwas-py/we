@@ -65,7 +65,7 @@ def student(request):
         'student_details':student_Details
     }
 
-    return render(request, 'boards/students.html', required_dict)
+    return render(request, 'themes/students.html', required_dict)
 
 
 
@@ -81,7 +81,7 @@ def add_student(request):
 
         isStudentThere = (student_details.objects.filter(username=username, password=password, stname=stname))
         if isStudentThere:
-            return render(request, 'boards/students.html', {'maxstd':f"{stname} is already created. Try something similar to: {stname} '1' or {stname} 'B'",'student_class':student_class.objects.filter(username=username, password=password),'school_details': school_details.objects.get(username=username, password=password), 'student_class': student_details.objects.filter(username=username, password=password)})
+            return render(request, 'themes/students.html', {'maxstd':f"{stname} is already created. Try something similar to: {stname} '1' or {stname} 'B'",'student_class':student_class.objects.filter(username=username, password=password),'school_details': school_details.objects.get(username=username, password=password), 'student_class': student_details.objects.filter(username=username, password=password)})
 
         student_short_name = stname.replace(' ','')
         student_address = request.POST.get('stdadd')
@@ -117,6 +117,6 @@ def add_student(request):
 
         school_Details = school_details.objects.get(username=username, password=password)
         Classes = student_class.objects.filter(connect_school=school_Details)
-        return render(request, 'boards/add_student.html', {'student_class':Classes, 'school_details':school_Details})
+        return render(request, 'themes/add_student.html', {'student_class':Classes, 'school_details':school_Details})
     # except:
     #     return redirect('home')

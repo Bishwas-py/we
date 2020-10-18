@@ -23,7 +23,7 @@ def dashboard(request):
         'student_details':student_Details
     }
 
-    return render(request, 'boards/dashboard.html', required_dict )        
+    return render(request, 'themes/dashboard.html', required_dict )        
 
 
 def user_ip_address(request):
@@ -61,7 +61,7 @@ def delete_account(request):
                 username=request.session['username']
                 )
         }
-        return render(request, "boards/profile.html", render_required_dictonary)
+        return render(request, "themes/profile.html", render_required_dictonary)
 
 
 def update(request):
@@ -119,7 +119,7 @@ def profile(request):
         username=request.session['username'],
         password=request.session['password'])
 }
-    return render(request, "boards/profile.html", render_required_dictonary)
+    return render(request, "themes/profile.html", render_required_dictonary)
 
 
 def log_in(request):

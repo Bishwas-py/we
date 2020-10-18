@@ -1,0 +1,49 @@
+{% extends 'layouts/panel.html' %} {% load static %} {% block content %}
+
+
+<h2>Welcome to settings</h2>
+<hr /> {% comment %} {% for classes in student_classes %}
+<p>'{{classes.class_list}}'</p>
+{% endfor %} {% endcomment %}
+<div class="container-fluid">
+    <div class="row">
+        <div class='col-lg-6'>
+            <div class="card shadow mb-4">
+                <div class="accordion" id="DisplayStudentsClass">
+                    <a data-toggle="collapse" data-target="#display_class" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="card-header" id="StudentsClass">
+
+                            <h5 class="mb-0">Create Classes</h5>
+
+                        </div>
+                    </a>
+
+
+                    <div id="display_class" class="collapse show" aria-labelledby="StudentsClass" data-parent="#DisplayStudentsClass">
+                        <div class="card-body">
+                            <form method="POST" action="/settings/add-class" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label for="classInput">Class or Grade</label>
+                                    <input type="text" class="form-control" id="classInput" name="class" aria-describedby="classHelp" placeholder="Example: Kindergarten, 1, 2, 3, etc." />
+                                    <small id="classHelp" class="form-text text-muted">
+                    Create the class that
+                    <strong><em>{{school_details.school_name}}</em></strong> has.
+                  </small>
+                                </div>
+                                <button type="submit" role="button" class="btn btn-primary btn-block">
+                  Submit
+                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
