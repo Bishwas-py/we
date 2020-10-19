@@ -15,6 +15,7 @@
         ]
     },
     "editor.copyWithSyntaxHighlighting": false,
+    "python.pythonPath": "Environment/bin/python",
 
 
 

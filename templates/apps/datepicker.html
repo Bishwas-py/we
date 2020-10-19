@@ -45,27 +45,29 @@
 <script>
     var max_day;
     var DayData = [];
+
     function get_max_np_date() { //Return the maximum Days in Nepali Date System (Bikram Sambat)
-        var get_year = document.getElementById('Year') 
-        var get_month = document.getElementById('Month'); 
-        
+        var get_year = document.getElementById('Year')
+        var get_month = document.getElementById('Month');
+
         year = get_year.options[get_year.selectedIndex].value;
         month = get_month.options[get_month.selectedIndex].value;
-        if (year && month){
+        if (year && month) {
             $.ajax({
-                url: 'max-np-day',
+                url: '/max-np-day',
                 type: 'get',
                 data: {
 
-                'year':year,
-                'month':month
+                    'year': year,
+                    'month': month
 
                 },
 
 
-                success: function (data) {
+                success: function(data) {
                     DayElm = document.getElementById("Day")
-                    function appendDay(){
+
+                    function appendDay() {
                         max_day = data;
                         var days;
                         for (days = 1; days <= max_day; days++) {
@@ -75,50 +77,37 @@
                             DayElm.appendChild(optionElm)
                         }
                     }
-                    if (DayData.length == 0){
-                        DayElm.innerHTML ="";
+                    if (DayData.length == 0) {
+                        DayElm.innerHTML = "";
                         DayData.push(data);
                         appendDay();
-                        console.log('Exp: '+1+', Initial Pushed Data:'+ data);
-                    }
-                    else if (data == DayData[DayData.length-1]){
-                        console.log('Exp: '+2+', Data Length:', DayData[DayData.length-1]+ ', Data:  '+data);
-                    }
-                    else if (data != DayData[DayData.length-1] ){
+                        console.log('Exp: ' + 1 + ', Initial Pushed Data:' + data);
+                    } else if (data == DayData[DayData.length - 1]) {
+                        DayElm.innerHTML = "";
+                        appendDay();
+                        get_day.value = setValue;
+                    } else if (data != DayData[DayData.length - 1]) {
                         var get_day = document.getElementById('Day');
                         setIndex = get_day.selectedIndexs
                         setValue = get_day.value
-                        DayElm.innerHTML ="";
+                        DayElm.innerHTML = "";
 
-                        if (get_day.length == data){
+                        if (get_day.length == data) {
                             appendDay();
                             DayData.push(data);
                             get_day.value = setValue;
-                            console.log('Exp: '+3.1+', LENGTH: '+old_value+  ', Data: '+data)
-                        }
-                        else{
+                        } else {
                             appendDay();
-                            
-                            if (setValue > data){
-                                get_day.value = data;
-                            }
-                            else{
-                                get_day.value = setValue;
-                            }
-                            console.log('Exp: '+3.2+',  Data: '+data)
-
+                            DayData.push(data);
                         }
-                        console.log(3);
                     }
                 }
-                
-                })
+
+            })
         }
 
 
     };
-    </script>
+</script>
 
 <!-- NepaliDatePicker <<:: -->
-
-
