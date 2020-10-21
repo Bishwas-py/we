@@ -84,15 +84,25 @@ def add_student(request):
             return render(request, 'themes/students.html', {'maxstd':f"{stname} is already created. Try something similar to: {stname} '1' or {stname} 'B'",'student_class':student_class.objects.filter(username=username, password=password),'school_details': school_details.objects.get(username=username, password=password), 'student_class': student_details.objects.filter(username=username, password=password)})
 
         student_short_name = stname.replace(' ','')
-        student_address = request.POST.get('stdadd')
-        student_class = student_class.objects.get(cList=request.POST.get('stdcls'))
-        student_father = request.POST.get('stdfname')
-        student_mother = request.POST.get('stdmname')
-        student_fam_occupation = request.POST.get('stdfo')
-        student_admission_date = request.POST.get('stdadate')
-        student_phone_number= request.POST.get('stdpnum')
-        student_date_of_birth = request.POST.get('stdbdate')
-        student_photo = request.FILES.get('stdpht')
+        student_address = request.POST.get('student_address')
+        student_class = student_class.objects.get(class_list=request.POST.get('student_class'))
+        student_father = request.POST.get('student_father')
+        student_mother = request.POST.get('student_mother')
+        student_fam_occupation = request.POST.get('student_fam_occupation')
+        """   Admission DATES    """
+        from modules.date_works import convert
+        admission_year, admission_month, admission_day = request.POST['admission_year'], request.POST['admission_month'], request.POST['admission_day']
+        admission_dates = convert(admission_year, admission_month, admission_day)
+        student_nepali_admission_date = admission_dates['np']
+        student_admission_date = admission_dates['en']
+        """   DATE OF BIRTH DATES    """
+        dob_year, dob_month, dob_day = request.POST['dob_year'], request.POST['dob_month'], request.POST['dob_day']
+        dob_dates = convert(dob_year, dob_month, dob_day)
+        student_nepali_dob_date =  dob_dates['np']
+        student_dob_date = dob_dates['en']
+
+        student_phone_number= request.POST.get('student_phone_number')
+        student_photo = request.FILES.get('student_photo')
         student_data = student_details(
             student_short_name=student_short_name,
             school_details = school_details,
@@ -104,9 +114,14 @@ def add_student(request):
             student_father = student_father,
             student_mother = student_mother,
             student_fam_occupation = student_fam_occupation,
-            student_admission_date = student_admission_date,
+            # DATES - ADmission
+            student_nepali_admission_date = student_nepali_admission_date,
+            student_eng_admission_date = student_eng_admission_date,
+            # DATES - DATE OF BIRTH
+            student_nepali_dob_date = student_nepali_dob_date,
+            student_eng_dob_date = student_eng_dob_date,
+            
             student_phone_number = student_phone_number,
-            student_date_of_birth = student_date_of_birth,
             student_photo = student_photo
         )
         student_data.save()

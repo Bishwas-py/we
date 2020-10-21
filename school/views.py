@@ -23,4 +23,24 @@ def addclass(request):
             return HttpResponse(2) # 2 means already created
     else:
         return HttpResponse(0) # 0 means false i.e NONSENSE
+
+def automatic_class(request):
+    create_class = ['Nursery','L.K.G','U.K.G','Kindergarten']+["Class "+ str(i) for i in range(1, 11)]
+    username = request.session['username']
+    password = request.session['password']
+    already_created = []
+    if request.method == 'POST':
+        school_data = school_details.objects.get(username=username, password=password)
+        for Class in create_class:
+            if not student_class.objects.filter(class_list=Class):
+                class_data = student_class(connect_school=school_data, class_list=Class)
+                class_data.save()
+            else:
+                already_created.append(Class)
+        if len(already_created) == len(create_class):
+            return HttpResponse(0)
+        else:
+            return HttpResponse(1)
+    else:
+        return HttpResponse(0)
         

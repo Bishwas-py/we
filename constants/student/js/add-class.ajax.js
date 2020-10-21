@@ -8,7 +8,7 @@
                   'class': Class,
                   'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
               },
-              success: function(data) {
+              success: function (data) {
                   created = document.getElementById("class-created")
                   if (data == 2) {
                       created.innerHTML = "<span class='bg-danger' style='color:white;font-weight:bold;padding:2px;'>" + Class + "</span>" + ' is already created.';
@@ -29,4 +29,32 @@
       }
 
 
+  }
+
+  function automatic_class() {
+      $.ajax({
+          url: '/school/auto-class-create',
+          type: 'post',
+          data: {
+            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+            },
+          success: function (data) {
+              if (data == 1) {
+                  class_list = ['Nursery', 'L.K.G', 'U.K.G', 'Kindergarten', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10']
+                  for (i = 0; i < class_list.length; i++) {
+
+                      var option = new Option(class_list[i], class_list[i]);
+                      /// jquerify the DOM object 'o' so we can use the html method
+                      $(option).html(class_list[i]);
+                      $("#classoptions").append(option);
+
+                  }
+                  $('#auto-class-created').innerHTML = "<span class='bg-success' style='color:white;font-weight:bold;padding:2px;'>" + class_list + "</span>" + ' created.';
+
+              }
+              else{
+                $('#auto-class-created').innerHTML = "<span class='bg-success' style='color:white;font-weight:bold;padding:2px;'>Failed to create class automatically.";
+              }
+          }
+      })
   }

@@ -1,6 +1,6 @@
 <!-- NepaliDatePicker ::>> -->
 <div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
-    <select class="form-control" class='{{Year}}' id="{{Year}}" name='{{year}}' onclick="get_max_np_date()">
+    <select class="form-control" class='{{Year}}' id="{{Year}}" name='{{year}}' onclick="{{function}}()">
         <option disabled selected>Year</option>
         <script>
             var years;
@@ -15,7 +15,7 @@
 </div>
 
 <div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
-    <select class="form-control" class='{{Month}}' id="{{Month}}" name='{{month}}' onclick="get_max_np_date()">
+    <select class="form-control" class='{{Month}}' id="{{Month}}" name='{{month}}' onclick="{{function}}()">
         <option selected disabled>Month</option>
         <option value="1">Baishakh</option>
         <option value="2">Jestha</option>
@@ -43,7 +43,7 @@
     var max_day;
     var DayData = [];
 
-    function get_max_np_date() { //Return the maximum Days in Nepali Date System (Bikram Sambat)
+    function {{function}}() { //Return the maximum Days in Nepali Date System (Bikram Sambat)
         var get_year = document.getElementById('{{Year}}')
         var get_month = document.getElementById('{{Month}}');
 
