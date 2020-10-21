@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from student.models import student_details
-from settings.models import student_class
+from school.models import student_class
 from accounts.models import school_details
 
 # Create your views here.
@@ -112,7 +112,7 @@ def add_student(request):
         student_data.save()
         return redirect('student')
     elif request.method == 'GET':
-        from settings.models import student_class
+        from school.models import student_class
         from accounts.models import school_details
 
         school_Details = school_details.objects.get(username=username, password=password)

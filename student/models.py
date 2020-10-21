@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from settings.models import student_class
+from school.models import student_class
 from accounts.models import school_details
 # Create your models here.
 class student_details(models.Model):

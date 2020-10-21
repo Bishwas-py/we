@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from accounts.models import school_details
 from student.models import student_details
-from settings.models import student_class
+from school.models import student_class
 import adbs
 # Create your views here.
 def dashboard(request):
@@ -127,8 +127,6 @@ def log_in(request):
             username = request.POST['username']
             password = request.POST['password']
             user_logged = school_details.objects.filter(username=username,password=password)
-
-            print('I was here 765', bool(user_logged))
             if not user_logged:
                 return render(request, "home/home.html", {'error': 'Username or Password is incorrect...'})
             else:
@@ -137,7 +135,6 @@ def log_in(request):
                 request.session['password'] = password
                 return redirect('dashboard')
     else:
-        print('I was here 124')
         if request.session.has_key('username') and request.session.has_key('password'):
             return redirect('home')
         else:
@@ -160,8 +157,8 @@ def sign_in(request):
         
         from modules.date_works import convert
         dates = convert(year, month, day)
-        nepali_established_date =  date['np']
-        established_date = date['en']
+        nepali_established_date =  dates['np']
+        established_date = dates['en']
 
         student_number = request.POST['student_number']
         school_website = request.POST['school_website']
@@ -196,7 +193,7 @@ def sign_in(request):
             principal=principal,
             address=address,
             established_date=established_date,
-            nepali_established_date=established_date,
+            nepali_established_date=nepali_established_date,
             student_number=student_number,
             school_website=school_website,
             user_ip=ip

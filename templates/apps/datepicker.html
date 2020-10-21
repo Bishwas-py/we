@@ -1,9 +1,6 @@
 <!-- NepaliDatePicker ::>> -->
-
-
-
 <div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
-    <select class="form-control" id="Year" name='year' onclick="get_max_np_date()">
+    <select class="form-control" class='{{Year}}' id="{{Year}}" name='{{year}}' onclick="get_max_np_date()">
         <option disabled selected>Year</option>
         <script>
             var years;
@@ -18,7 +15,7 @@
 </div>
 
 <div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
-    <select class="form-control" id="Month" name='month' onclick="get_max_np_date()">
+    <select class="form-control" class='{{Month}}' id="{{Month}}" name='{{month}}' onclick="get_max_np_date()">
         <option selected disabled>Month</option>
         <option value="1">Baishakh</option>
         <option value="2">Jestha</option>
@@ -37,7 +34,7 @@
 
 
 <div class="form-group col-sm-3 d-inline-block" style="padding: 0px;">
-    <select class="form-control" id="Day" name='day'>
+    <select class="form-control" id="{{Day}}" class="{{Day}}" name='{{day}}'>
         <option disabled selected>Day</option>
         
         </select>
@@ -47,8 +44,8 @@
     var DayData = [];
 
     function get_max_np_date() { //Return the maximum Days in Nepali Date System (Bikram Sambat)
-        var get_year = document.getElementById('Year')
-        var get_month = document.getElementById('Month');
+        var get_year = document.getElementById('{{Year}}')
+        var get_month = document.getElementById('{{Month}}');
 
         year = get_year.options[get_year.selectedIndex].value;
         month = get_month.options[get_month.selectedIndex].value;
@@ -65,7 +62,7 @@
 
 
                 success: function(data) {
-                    DayElm = document.getElementById("Day")
+                    DayElm = document.getElementById("{{Day}}")
 
                     function appendDay() {
                         max_day = data;
@@ -81,13 +78,12 @@
                         DayElm.innerHTML = "";
                         DayData.push(data);
                         appendDay();
-                        console.log('Exp: ' + 1 + ', Initial Pushed Data:' + data);
                     } else if (data == DayData[DayData.length - 1]) {
                         DayElm.innerHTML = "";
                         appendDay();
                         get_day.value = setValue;
                     } else if (data != DayData[DayData.length - 1]) {
-                        var get_day = document.getElementById('Day');
+                        var get_day = document.getElementById('{{Day}}');
                         setIndex = get_day.selectedIndexs
                         setValue = get_day.value
                         DayElm.innerHTML = "";

@@ -4,7 +4,7 @@ from accounts.models import school_details
 from django.http import HttpResponse
 from django.contrib.sessions.models import Session
 from student.models import student_details
-from settings.models import student_class
+from school.models import student_class
 
 # Create your views here.
 def home(request):
