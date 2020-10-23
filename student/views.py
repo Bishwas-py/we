@@ -83,9 +83,20 @@ def add_student(request):
                     username=username,
                     password=password
         )
-        class_list=student_class.objects.get(class_list=request.POST.get('student_class'))
-
+        Class = request.POST.get('student_class')
+        print('Class:  ', Class)
         student_name = request.POST.get('student_name').rstrip()
+        print('student_name', student_name)
+        try:
+            class_list=student_class.objects.get(class_list=Class)
+        except:
+            required_dict = {
+                'success_value':'danger',
+                'success_message':f"Classes aren't created yet",
+                'success_body':f"Please create classes in the upper 'Class' option, fill the form correctly and submit again.",
+                'success_remarks':'Faliure'
+            }
+            return JsonResponse(required_dict)
         student_short_name = student_name.replace(' ','')
         student_address = request.POST.get('student_address')
         student_father = request.POST.get('student_father')
@@ -102,36 +113,35 @@ def add_student(request):
         dob_year, dob_month, dob_day = request.POST['dob_year'], request.POST['dob_month'], request.POST['dob_day']
         dob_dates = convert(dob_year, dob_month, dob_day)
         student_nepali_dob_date =  dob_dates['np']
-        student_dob_date = dob_dates['en']
+        student_eng_admission_date = dob_dates['en']
 
         student_phone_number= request.POST.get('student_phone_number')
         student_photo = request.FILES.get('student_photo')
         student_class = student_class.objects.get(class_list=class_list)
         
-        is_student_created = (
-            student_details.objects.filter(
-                username=username,
-                password=password,
+        is_student_created = student_details.objects.filter(
+                connect_school=school_details,
                 student_class=student_class,
-                student_dob_date=student_dob_date
+                student_mother=student_mother,
+                student_father=student_father,
+                student_phone_number=student_phone_number
             )
-        )
-        
+
         if is_student_created:
             required_dict = {
                 'success_value':'danger',
-                'already_created':f"{student_name} is already created. Try something similar to: {student_name} '1' or {student_name} 'B'",
+                'success_message':f"{student_name} is already created",
+                'success_body':f"{student_name} is already created. Try something similar to: {student_name} '1' or {student_name} 'B'",
+                'success_remarks':'Faliure'
                 }
             return JsonResponse(request, 'themes/students.html', required_dict)
 
         
-        student_data = student_details_(
-            student_short_name=student_short_name,
-            school_details = school_details,
-            student_class=student_class,
-            username = username,
-            password = password,
+        student_data = student_details.objects.filter(
+            connect_school=school_details,
             student_name = student_name,
+            student_short_name=student_short_name,
+            student_class=student_class,
             student_address = student_address,
             student_father = student_father,
             student_mother = student_mother,
@@ -149,7 +159,10 @@ def add_student(request):
         student_data.save()
         required_dict = {
             'success_value':'success',
-            'success_message':f'Student {student_name} is created.'}
+            'success_message':f'{student_name} is created.',
+            'success_body':f'The student you submitted in created now. You can add more students.',
+            'success_remarks':'Successful'
+            }
         return JsonResponse()
     elif request.method == 'GET':
         from school.models import student_class

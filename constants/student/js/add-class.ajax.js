@@ -18,8 +18,8 @@
                       var option = new Option(data, data);
                       /// jquerify the DOM object 'o' so we can use the html method
                       $(option).html(data);
-                      $("#classoptions").append(option);
-                      $("#classoptions").val(data);
+                      $("#student_class").append(option);
+                      $("#student_class").val(data);
                       created.innerHTML = "<span class='bg-success' style='color:white;font-weight:bold;padding:2px;'>" + data + "</span>" + ' created.';
 
                   }
@@ -46,14 +46,26 @@
                       var option = new Option(class_list[i], class_list[i]);
                       /// jquerify the DOM object 'o' so we can use the html method
                       $(option).html(class_list[i]);
-                      $("#classoptions").append(option);
+                      $("#student_class").append(option);
 
                   }
-                  $('#auto-class-created').innerHTML = "<span class='bg-success' style='color:white;font-weight:bold;padding:2px;'>" + class_list + "</span>" + ' created.';
+                  $('#toast-head-message').html('Classes created automatically');
+                  $('#toast-head-message').attr("class", 'mr-auto text-'+'success');
+                  $('#toast-success-or-faliure').attr("class", 'text-'+'success');
+                  $('#toast-success-or-faliure').html('Success');
+                  $('#toast-success-message').html('The class are created successfully. Now, you can procced to next step.');
+                  $('.toast').toast('show')
+
 
               }
               else{
-                $('#auto-class-created').innerHTML = "<span class='bg-success' style='color:white;font-weight:bold;padding:2px;'>Failed to create class automatically.";
+                $('#toast-head-message').html('Classes are already created automatically');
+                $('#toast-head-message').attr("class", 'mr-auto text-'+'success');
+                $('#toast-success-or-faliure').attr("class", 'text-'+'danger');
+                $('#toast-success-or-faliure').html('Failure');
+                $('#toast-success-message').html('The class are already created automatically. You can procced to next step.');
+                $('.toast').toast('show')
+
               }
           }
       })
