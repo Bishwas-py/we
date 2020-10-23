@@ -6,6 +6,7 @@
         <h6 class="m-0 font-weight-bold text-primary">Add Students Here</h6>
     </div>
     <div class="card-body">
+        <form id='add-student-form' enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="form-group">
@@ -128,8 +129,9 @@
                 </div>
             </div>
 
-            <button type="button" onclick="add_student()" role="button" class="btn btn-primary btn-block col-sm-2 d-inline-block">
+            <button type="submit" role="button" class="btn btn-primary btn-block col-sm-2 d-inline-block">
                 Submit
+                <!-- add-student-button add-student-form -->
             </button>
             <a href="/student/student" class="btn btn-danger btn-icon-split">
                 <span class="icon text-white-50">
@@ -137,6 +139,7 @@
                 </span>
                 <span class="text">Close</span>
             </a>
+        </form>
     </div>
 </div>
 

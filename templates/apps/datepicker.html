@@ -1,7 +1,7 @@
 <!-- NepaliDatePicker ::>> -->
 <div class="form-group col-sm-3 d-inline-block" style="padding: 0px;">
-    <select class="form-control" class='{{Year}}' id="{{Year}}" name='{{Year}}' onclick="{{date_function}}('conditional')">
-        <option disabled selected>Year</option>
+    <select class="form-control" class='{{Year}}' id="{{Year}}" name='{{Year}}' required>
+        <option value="" disabled selected>Year</option>
         <script>
             var years;
             var req_date = new Date();
@@ -14,8 +14,8 @@
 </div>
 
 <div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
-    <select class="form-control" class='{{Month}}' id="{{Month}}" name='{{Month}}' onclick="{{date_function}}('conditional')">
-        <option selected disabled>Month</option>
+    <select class="form-control" class='{{Month}}' id="{{Month}}" name='{{Month}}' required> <!--onclick="{{date_function}}('only_append_days')" -->
+        <option value="" selected disabled>Month</option>
         <option value="1">Baishakh</option>
         <option value="2">Jestha</option>
         <option value="3">Aashadha</option>
@@ -34,8 +34,8 @@
 
 
 <div class="form-group col-sm-3 d-inline-block" style="padding: 0px;">
-    <select class="form-control" id="{{Day}}" class="{{Day}}" name='{{Day}}'>
-        <option disabled selected>Day</option>
+    <select class="form-control" id="{{Day}}" class="{{Day}}" name='{{Day}}' required>
+        <option value='' disabled selected>Day</option>
 
     </select>
 </div>
@@ -44,10 +44,8 @@
 </div>
 
 <script>
-    var max_day;
-    var Last_day_counter = [];
-
     function append_days_{{date_function}}(data) {
+        $('#{{Day}}').html('');
         max_day = parseInt(data);
         var days = 1;
         while (days <= max_day) {
@@ -60,33 +58,21 @@
         }
     }
 
-    function conditional_append_day_{{date_function}}(data){
-        get_day_element = document.getElementById("{{Day}}")
-        if (Last_day_counter.length == 0) {
-            get_day_element.innerHTML = "";
-            Last_day_counter.push(data);
-            append_days_{{date_function}}(data);
-        } else if (data != Last_day_counter[Last_day_counter.length - 1]) {
-            var get_day = document.getElementById('{{Day}}');
-            get_day_element.innerHTML = "";
-            if (get_day.length == data) {
-                append_days_{{date_function}}(data);
-                Last_day_counter.push(data);
-            } else {
-                append_days_{{date_function}}(data);
-                Last_day_counter.push(data);
-            }
-        }
-    }
     function set_today_{{today_date_function}}(data){
             day = $('#{{Day}}');
             day.val(parseInt(data));
         }
+    
+    $( "#{{Month}}, #{{Year}}" ).on( "change", function() {
+        console.log('We ran out 123');
+        {{date_function}}('only_append_days');
+    })
+
     function {{date_function}}(mode) { //Return the maximum Days in Nepali Date System (Bikram Sambat)
-        var get_year = document.getElementById('{{Year}}')
-        var get_month = document.getElementById('{{Month}}');
-        year = get_year.options[get_year.selectedIndex].value;
-        month = get_month.options[get_month.selectedIndex].value;
+        var get_year = $('#{{Year}}')
+        var get_month = $('#{{Month}}');
+        year = get_year.val();
+        month = get_month.val();
         if (year && month) {
             $.ajax({
                 url: '/max-np-day',
@@ -96,10 +82,10 @@
                     'month': month
                 },
                 success: function (data) {
-                    if (mode == 'conditional'){
-                        conditional_append_day_{{date_function}}(data);
+                    if (mode == 'only_append_days'){
+                        append_days_{{date_function}}(data);
                     }
-                    else if (mode[0] == 'unconditional'){
+                    else if (mode[0] == 'set_todays_date'){
                         append_days_{{date_function}}(data);
                         set_today_{{today_date_function}}(mode[1]);
                     }
@@ -117,7 +103,7 @@
                 month = $('#{{Month}}');
                 year.val(parseInt(data['year']));
                 month.val(parseInt(data['month']));
-                {{date_function}}(['unconditional', parseInt(data['day'])]);                
+                {{date_function}}(['set_todays_date', parseInt(data['day'])]);                
             }
         })
     }

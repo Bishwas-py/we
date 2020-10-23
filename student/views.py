@@ -117,6 +117,7 @@ def add_student(request):
 
         student_phone_number= request.POST.get('student_phone_number')
         student_photo = request.FILES.get('student_photo')
+        print('student_photo:',student_photo)
         student_class = student_class.objects.get(class_list=class_list)
         
         is_student_created = student_details.objects.filter(
@@ -125,7 +126,6 @@ def add_student(request):
                 student_class=student_class,
                 student_mother=student_mother,
                 student_father=student_father,
-                student_phone_number=student_phone_number,
                 student_eng_dob_date=student_eng_dob_date
             )
 

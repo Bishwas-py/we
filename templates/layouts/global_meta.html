@@ -1,6 +1,5 @@
 {% load static %}{% load fontawesome_5 %}{% fontawesome_5_static %} 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="{% static 'panel/sb-admin-2.css' %}" rel="stylesheet">
 <title>{{school_details.school_name}} - WebSMS</title>
 <!-- fontawesome -->
 <script src="https://kit.fontawesome.com/11d2294a53.js" crossorigin="anonymous"></script>
@@ -24,7 +23,7 @@
 <!-- Bootstrap <:: Ends-->
 
   <!-- Custom styles for this template-->
-  <script src="{% static 'panel/js/panel_js.js' %}"></script>
+  <!-- <script src="{% static 'layouts/js/panel_js.js' %}"></script> -->
 
   <script>
     function siderBarToggler(){
@@ -34,12 +33,10 @@
     if (bodyVar.getAttribute('class')=='sidebar-toggled'){
       bodyVar.setAttribute('class', null)
       accordionVar.setAttribute('class', 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled')
-      console.log('I am here fuck you1')
     }
     else{
       bodyVar.setAttribute('class', 'sidebar-toggled')
       accordionVar.setAttribute('class', 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion')
-      console.log('I am here fuck you')
     }
   }
   </script>
