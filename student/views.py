@@ -108,12 +108,12 @@ def add_student(request):
         print('admission_year:',admission_year, 'Month: ', admission_month, 'Day:', admission_day)
         admission_dates = convert(admission_year, admission_month, admission_day)
         student_nepali_admission_date = admission_dates['np']
-        student_admission_date = admission_dates['en']
+        student_eng_admission_date = admission_dates['en']
         """   DATE OF BIRTH DATES    """
         dob_year, dob_month, dob_day = request.POST['dob_year'], request.POST['dob_month'], request.POST['dob_day']
         dob_dates = convert(dob_year, dob_month, dob_day)
         student_nepali_dob_date =  dob_dates['np']
-        student_eng_admission_date = dob_dates['en']
+        student_eng_dob_date = dob_dates['en']
 
         student_phone_number= request.POST.get('student_phone_number')
         student_photo = request.FILES.get('student_photo')
@@ -121,10 +121,12 @@ def add_student(request):
         
         is_student_created = student_details.objects.filter(
                 connect_school=school_details,
+                student_name=student_name,
                 student_class=student_class,
                 student_mother=student_mother,
                 student_father=student_father,
-                student_phone_number=student_phone_number
+                student_phone_number=student_phone_number,
+                student_eng_dob_date=student_eng_dob_date
             )
 
         if is_student_created:
@@ -134,10 +136,10 @@ def add_student(request):
                 'success_body':f"{student_name} is already created. Try something similar to: {student_name} '1' or {student_name} 'B'",
                 'success_remarks':'Faliure'
                 }
-            return JsonResponse(request, 'themes/students.html', required_dict)
+            return JsonResponse(required_dict)
 
         
-        student_data = student_details.objects.filter(
+        student_data = student_details(
             connect_school=school_details,
             student_name = student_name,
             student_short_name=student_short_name,
@@ -163,7 +165,7 @@ def add_student(request):
             'success_body':f'The student you submitted in created now. You can add more students.',
             'success_remarks':'Successful'
             }
-        return JsonResponse()
+        return JsonResponse(required_dict)
     elif request.method == 'GET':
         from school.models import student_class
         from accounts.models import school_details
