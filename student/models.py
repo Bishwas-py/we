@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+import nepali_datetime
 from school.models import student_class
 from accounts.models import school_details
 # Create your models here.
@@ -13,9 +14,15 @@ class student_details(models.Model):
     student_father = models.CharField(max_length=150, null=True)
     student_mother = models.CharField(max_length=150, null=True)
     student_fam_occupation = models.CharField(max_length=150, null=True)
-    student_admission_date = models.DateField(default=timezone.now) #student addmission data
+
+    # DATES - ADmission
+    student_nepali_admission_date = models.CharField(default=str(nepali_datetime.date.today()), max_length=150, null=True),
+    student_eng_admission_date = models.CharField(default=timezone.now, max_length=150, null=True),
+    # DATES - DATE OF BIRTH
+    student_nepali_dob_date = models.CharField(default=str(nepali_datetime.date.today()), max_length=150, null=True),
+    student_eng_dob_date = models.CharField(default=timezone.now, max_length=150, null=True),
+
     student_phone_number = models.CharField(max_length=95, null=True)
-    student_date_of_birth = models.DateField(default=timezone.now)
     student_photo = models.ImageField(max_length=500, upload_to='')
     #(""), upload_to=None, height_field=None, width_field=None,
     

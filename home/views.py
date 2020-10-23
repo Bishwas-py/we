@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
 from accounts.models import school_details
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.sessions.models import Session
 from student.models import student_details
 from school.models import student_class
@@ -37,3 +37,10 @@ def max_nepali_day(request):
     realMaxDate = {get_max_np_day(year, month)}
     print(realMaxDate)
     return HttpResponse(realMaxDate)
+
+
+def todaydate(request):
+    import nepali_datetime
+    date = str(nepali_datetime.date.today()).split('-')
+    date = {'year':date[0],'month':date[1], 'day':date[2]}
+    return JsonResponse(date)

@@ -1,21 +1,20 @@
 <!-- NepaliDatePicker ::>> -->
-<div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
-    <select class="form-control" class='{{Year}}' id="{{Year}}" name='{{year}}' onclick="{{function}}()">
+<div class="form-group col-sm-3 d-inline-block" style="padding: 0px;">
+    <select class="form-control" class='{{Year}}' id="{{Year}}" name='{{Year}}' onclick="{{date_function}}('conditional')">
         <option disabled selected>Year</option>
         <script>
             var years;
             var req_date = new Date();
             var max_year = req_date.getFullYear();
-            for (years = 1978; years < (max_year+58); years++) {
+            for (years = 1978; years < (max_year + 58); years++) {
                 document.write("<option value='" + years + "'>" + years + "</option>");
             }
-
         </script>
     </select>
 </div>
 
 <div class="form-group col-sm-4 d-inline-block" style="padding: 0px;">
-    <select class="form-control" class='{{Month}}' id="{{Month}}" name='{{month}}' onclick="{{function}}()">
+    <select class="form-control" class='{{Month}}' id="{{Month}}" name='{{Month}}' onclick="{{date_function}}('conditional')">
         <option selected disabled>Month</option>
         <option value="1">Baishakh</option>
         <option value="2">Jestha</option>
@@ -33,20 +32,59 @@
 </div>
 
 
+
 <div class="form-group col-sm-3 d-inline-block" style="padding: 0px;">
-    <select class="form-control" id="{{Day}}" class="{{Day}}" name='{{day}}'>
+    <select class="form-control" id="{{Day}}" class="{{Day}}" name='{{Year}}'>
         <option disabled selected>Day</option>
-        
-        </select>
+
+    </select>
 </div>
+<div class="form-group col-sm-1 d-inline-block" style="padding: 0px;">
+    <button onclick="{{today_date_function}}()" type='button' class="btn btn-link">Today</button>
+</div>
+
 <script>
     var max_day;
-    var DayData = [];
+    var Last_day_counter = [];
 
-    function {{function}}() { //Return the maximum Days in Nepali Date System (Bikram Sambat)
+    function append_days_{{date_function}}(data) {
+        max_day = parseInt(data);
+        var days = 1;
+        while (days <= max_day) {
+            var day_options = new Option(days, days);
+            /// jquerify the DOM object 'o' so we can use the html method
+            $(day_options).html(days);
+            $("#{{Day}}").append(day_options);
+            $("#{{Day}}").val(days);
+            days++;
+        }
+    }
+
+    function conditional_append_day_{{date_function}}(data){
+        get_day_element = document.getElementById("{{Day}}")
+        if (Last_day_counter.length == 0) {
+            get_day_element.innerHTML = "";
+            Last_day_counter.push(data);
+            append_days_{{date_function}}(data);
+        } else if (data != Last_day_counter[Last_day_counter.length - 1]) {
+            var get_day = document.getElementById('{{Day}}');
+            get_day_element.innerHTML = "";
+            if (get_day.length == data) {
+                append_days_{{date_function}}(data);
+                Last_day_counter.push(data);
+            } else {
+                append_days_{{date_function}}(data);
+                Last_day_counter.push(data);
+            }
+        }
+    }
+    function set_today_{{today_date_function}}(data){
+            day = $('#{{Day}}');
+            day.val(parseInt(data));
+        }
+    function {{date_function}}(mode) { //Return the maximum Days in Nepali Date System (Bikram Sambat)
         var get_year = document.getElementById('{{Year}}')
         var get_month = document.getElementById('{{Month}}');
-
         year = get_year.options[get_year.selectedIndex].value;
         month = get_month.options[get_month.selectedIndex].value;
         if (year && month) {
@@ -54,56 +92,35 @@
                 url: '/max-np-day',
                 type: 'get',
                 data: {
-
                     'year': year,
                     'month': month
-
                 },
-
-
-                success: function(data) {
-                    DayElm = document.getElementById("{{Day}}")
-
-                    function appendDay() {
-                        max_day = data;
-                        var days;
-                        for (days = 1; days <= max_day; days++) {
-                            var optionElm = document.createElement("option");
-                            var daysNode = document.createTextNode(days);
-                            optionElm.appendChild(daysNode)
-                            DayElm.appendChild(optionElm)
-                        }
+                success: function (data) {
+                    if (mode == 'conditional'){
+                        conditional_append_day_{{date_function}}(data);
                     }
-                    if (DayData.length == 0) {
-                        DayElm.innerHTML = "";
-                        DayData.push(data);
-                        appendDay();
-                    } else if (data == DayData[DayData.length - 1]) {
-                        DayElm.innerHTML = "";
-                        appendDay();
-                        get_day.value = setValue;
-                    } else if (data != DayData[DayData.length - 1]) {
-                        var get_day = document.getElementById('{{Day}}');
-                        setIndex = get_day.selectedIndexs
-                        setValue = get_day.value
-                        DayElm.innerHTML = "";
-
-                        if (get_day.length == data) {
-                            appendDay();
-                            DayData.push(data);
-                            get_day.value = setValue;
-                        } else {
-                            appendDay();
-                            DayData.push(data);
-                        }
+                    else if (mode[0] == 'unconditional'){
+                        append_days_{{date_function}}(data);
+                        set_today_{{today_date_function}}(mode[1]);
                     }
-                }
 
+                    }
             })
         }
-
-
-    };
+    }
+    function {{today_date_function}}() {
+        $.ajax({
+            url: '/today-date',
+            type: 'get',
+            success: function (data) {
+                year = $('#{{Year}}');
+                month = $('#{{Month}}');
+                year.val(parseInt(data['year']));
+                month.val(parseInt(data['month']));
+                {{date_function}}(['unconditional', parseInt(data['day'])]);                
+            }
+        })
+    }
 </script>
 
 <!-- NepaliDatePicker <<:: -->

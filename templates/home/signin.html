@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
             <span class='d-block'>Date of Establishment</span>
-            {% include 'apps/datepicker.html' %}
+            {% include 'apps/datepicker.html' with today_date_function='set_today_date_for_establishment' date_function='date_function_for_establishment' Year='year' Month='month' Day='day' %}
 
         </div>
         <div class="form-group">

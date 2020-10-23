@@ -6,7 +6,7 @@
         <h6 class="m-0 font-weight-bold text-primary">Add Students Here</h6>
     </div>
     <div class="card-body">
-        <form method="POST" action="/addstd" enctype="multipart/form-data">
+        <form method="POST" action="/student/add-student" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="form-group">
@@ -96,7 +96,7 @@
                     Addmission Date:
                 </label>
                 <div id='student_admission_date'>
-                    {% include "apps/datepicker.html" with function="admission" Year="admission_year" Month="admission_month" Day="admission_day" %}
+                    {% include "apps/datepicker.html" with today_date_function='set_today_date_for_admission' date_function='date_function_for_admission' Year="admission_year" Month="admission_month" Day="admission_day" %}
 
                 </div>
             </div>
@@ -125,7 +125,7 @@
                     Date of Birth:
                 </label>
                 <div id='student_date_of_birth'>
-                    {% include "apps/datepicker.html" with function='dob' Year="dob_year" Month="dob_month" Day="dob_day" %}
+                    {% include "apps/datepicker.html" with today_date_function='set_today_date_for_dob' date_function='date_function_for_dob' Year="dob_year" Month="dob_month" Day="dob_day" %}
                 </div>
             </div>
 
