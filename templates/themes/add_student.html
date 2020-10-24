@@ -1,6 +1,6 @@
 {% extends 'layouts/panel.html' %}
- {% load static %}
- {% block content %}
+{% load static %}
+{% block content %}
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Add Students Here</h6>
@@ -13,10 +13,25 @@
                 <label class="control-label" for="student_name">
                     Student's Name:
                 </label>
-                <div>
+                <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Student Name" id="student_name"
                         name="student_name" />
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="gender"> Gender and Ethnicity </label>
+                <select class="custom-select col-md-5" name="gender" id="gender" required>
+                    <option disabled selected value="">Gender</option>
+                    {% for value, gender_name in gender  %}
+                    <option value='{{value}}'>{{gender_name}}</option>
+                    {% endfor %}
+                </select>
+                <select class="custom-select col-md-5" name="ethnicity" id="ethnicity" required>
+                    <option disabled selected value="">Ethnic Group</option>
+                    {% for value, ethnic_group in ethnicity  %}
+                    <option value='{{value}}'>{{ethnic_group}}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="form-group">
                 <label class="control-label" for="student_address">
@@ -51,8 +66,8 @@
 
 
                     <div class="input-group-append">
-                        <button data-toggle="modal" href="#"
-                            class="btn btn-outline-secondary" type="button" onclick="automatic_class()">Create Automatically</button>
+                        <button data-toggle="modal" href="#" class="btn btn-outline-secondary" type="button"
+                            onclick="automatic_class()">Create Automatically</button>
                     </div>
                     <small id='auto-class-created' class="form-text text-muted"></small>
                     {% endif %}
@@ -105,8 +120,8 @@
                     Student's photo:
                 </label>
                 <div>
-                    <input id="student_photo" type="file" name="student_photo" accept="image/x-png,image/gif,image/jpeg"
-                        required />
+                    <input id="student_photo" type="file" name="student_photo"
+                        accept="image/x-png,image/gif,image/jpeg" />
                 </div>
             </div>
 

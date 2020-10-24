@@ -59,11 +59,11 @@ def student(request):
     password=request.session['password']
     school_Details = school_details.objects.get(username=username, password=password)
     student_Class = student_class.objects.filter(connect_school=school_Details)
-    student_Details = student_details.objects.filter(connect_school=school_Details)
+    student_data = student_details.objects.filter(connect_school=school_Details)
     required_dict = {
         'school_details':school_Details,
         'student_class':student_Class,
-        'student_details':student_Details
+        'student_details':student_data
     }
 
     return render(request, 'themes/students.html', required_dict)
@@ -168,10 +168,19 @@ def add_student(request):
         return JsonResponse(required_dict)
     elif request.method == 'GET':
         from school.models import student_class
+        from student.models import student_details
         from accounts.models import school_details
 
-        school_Details = school_details.objects.get(username=username, password=password)
-        Classes = student_class.objects.filter(connect_school=school_Details)
-        return render(request, 'themes/add_student.html', {'student_class':Classes, 'school_details':school_Details})
+        school_details = school_details.objects.get(username=username, password=password)
+        student_details = student_details.objects.first()
+        gender = student_details._meta.get_field('gender').choices
+        ethnicity = student_details._meta.get_field('ethnicity').choices
+        Classes = student_class.objects.filter(connect_school=school_details)
+        return render(request, 'themes/add_student.html', {
+            'student_class':Classes,
+            'school_details':school_details,
+            'gender':gender,
+            'ethnicity':ethnicity
+            })
     # except:
     #     return redirect('home')
