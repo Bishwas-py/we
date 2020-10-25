@@ -68,7 +68,19 @@ def student(request):
 
     return render(request, 'themes/students.html', required_dict)
 
+def test(request):
+    username=request.session['username']
+    password=request.session['password']
+    school_Details = school_details.objects.get(username=username, password=password)
+    student_Class = student_class.objects.filter(connect_school=school_Details)
+    student_data = student_details.objects.filter(connect_school=school_Details)
+    required_dict = {
+        'school_details':school_Details,
+        'student_class':student_Class,
+        'student_details':student_data
+    }
 
+    return render(request, 'themes/more_info_student.html', required_dict)
 
 def add_student(request):
     username=request.session['username']
@@ -84,18 +96,17 @@ def add_student(request):
                     password=password
         )
         Class = request.POST.get('student_class')
-        print('Class:  ', Class)
         student_name = request.POST.get('student_name').rstrip()
         gender = request.POST.get('gender')
         ethnicity=request.POST.get('ethnicity')
         print('student_name', student_name)
         try:
-            class_list=student_class.objects.get(class_list=Class)
+            class_list=student_class.objects.get(connect_school=school_details, class_list=Class)
         except:
             required_dict = {
                 'success_value':'danger',
-                'success_message':f"Classes aren't created yet",
-                'success_body':f"Please create classes in the upper 'Class' option, fill the form correctly and submit again.",
+                'success_message':f"The class{'es' if Class == '' else ''} {'[' if Class != '' else ''}{Class}{']' if Class != '' else ''} {'are' if Class == '' else 'is'} not created yet",
+                'success_body':f"Please create class{'es' if Class == '' else ''} {'[' if Class != '' else ''} {Class} {']' if Class != '' else ''} in the upper 'Class' option, fill the form correctly and submit again.",
                 'success_remarks':'Faliure'
             }
             return JsonResponse(required_dict)
@@ -120,12 +131,12 @@ def add_student(request):
         student_phone_number= request.POST.get('student_phone_number')
         student_photo = request.FILES.get('student_photo')
         print('student_photo:',student_photo)
-        student_class = student_class.objects.get(class_list=class_list)
+
         
         is_student_created = student_details.objects.filter(
                 connect_school=school_details,
                 student_name=student_name,
-                student_class=student_class,
+                student_class=class_list,
                 student_mother=student_mother,
                 student_father=student_father,
                 student_eng_dob_date=student_eng_dob_date
@@ -140,14 +151,13 @@ def add_student(request):
                 }
             return JsonResponse(required_dict)
 
-        
         student_data = student_details(
             connect_school=school_details,
             student_name = student_name,
             gender=gender,
             ethnicity=ethnicity,
             student_short_name=student_short_name,
-            student_class=student_class,
+            student_class=class_list,
             student_address = student_address,
             student_father = student_father,
             student_mother = student_mother,

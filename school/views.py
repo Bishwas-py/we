@@ -9,13 +9,16 @@ def profile(request):
 
 
 def addclass(request):
+    username = request.session['username']
+    password = request.session['password']
+    
     get_class = request.POST.get('class')
     class_list = ["Grade "+ str(i) for i in range(1, 13)]+["Class "+ str(i) for i in range(1, 13)]+[str(i) for i in range(1, 13)]+['Montessori','Nursery','L.K.G','U.K.G','Kindergarten','Kinder Garten','K.G']
+    
+    school_data = school_details.objects.get(username=username, password=password)
     if get_class in class_list:
-        if not student_class.objects.filter(class_list=get_class):
-            username = request.session['username']
-            password = request.session['password']
-            school_data = school_details.objects.get(username=username, password=password)
+        if not student_class.objects.filter(connect_school=school_data, class_list=get_class):
+            
             class_data = student_class(connect_school=school_data, class_list=get_class)
             class_data.save()
             return HttpResponse(get_class)
