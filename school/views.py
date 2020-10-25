@@ -32,7 +32,7 @@ def automatic_class(request):
     if request.method == 'POST':
         school_data = school_details.objects.get(username=username, password=password)
         for Class in create_class:
-            if not student_class.objects.filter(class_list=Class):
+            if not student_class.objects.filter(connect_school=school_data,class_list=Class):
                 class_data = student_class(connect_school=school_data, class_list=Class)
                 class_data.save()
             else:

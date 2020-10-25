@@ -86,6 +86,8 @@ def add_student(request):
         Class = request.POST.get('student_class')
         print('Class:  ', Class)
         student_name = request.POST.get('student_name').rstrip()
+        gender = request.POST.get('gender')
+        ethnicity=request.POST.get('ethnicity')
         print('student_name', student_name)
         try:
             class_list=student_class.objects.get(class_list=Class)
@@ -142,6 +144,8 @@ def add_student(request):
         student_data = student_details(
             connect_school=school_details,
             student_name = student_name,
+            gender=gender,
+            ethnicity=ethnicity,
             student_short_name=student_short_name,
             student_class=student_class,
             student_address = student_address,

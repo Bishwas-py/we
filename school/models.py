@@ -6,3 +6,4 @@ class student_class(models.Model):
     class_list = models.CharField(max_length=95)
     def __str__(self):
             return self.class_list
+    
