@@ -23,7 +23,7 @@
                             width="150">
                         <div class="mt-3">
                             <h4>{{student.name}}</h4>
-                            <p class="text-secondary mb-1">Studying in {{student.class}}</p>
+                            <p class="text-secondary mb-1">Studying in {{student.Class}}</p>
                             <p class="text-muted font-size-sm">{{student.address}}</p>
                             <button class="btn btn-info">Edit</button>
                             <button class="btn btn-outline-primary">Download Report</button>
@@ -61,8 +61,8 @@
                         <span class="text-secondary">{{student.nepali_dob_date}}</span>
                     </li>
                 </ul>
-                <button class="btn btn-danger">Delete Student</button>
             </div>
+            <button class="btn btn-danger mt-2">Delete Student</button>
         </div>
         <div class="col-md-8">
             <div class="card mb-3">
@@ -72,34 +72,42 @@
                             <h6 class="mb-0">Full Name</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            {{student.}}
+                            {{student.name}}
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0">Email</h6>
+                            <h6 class="mb-0">Date of Birth</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            fip@jukmuh.al
+                            <img class='mr-3' src='/media/icons/nepal.png' width="20">{{student.nepali_dob_date}}  BS
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span class="mb-0"></span>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <img class='mr-3' src='/media/icons/new-zealand.png' width="20">{{student.eng_dob_date}}  AD
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0">Phone</h6>
+                            <h6 class="mb-0">Class</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            (239) 816-9029
+                           {{student.Class}}
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0">Mobile</h6>
+                            <h6 class="mb-0">Phone Number</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            (320) 380-4539
+                           {{student.phone_number}}
                         </div>
                     </div>
                     <hr>
@@ -108,9 +116,63 @@
                             <h6 class="mb-0">Address</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            Bay Area, San Francisco, CA
+                            {{student.address}}
                         </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Father</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{student.father}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Mother</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{student.mother}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Family Occupation</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{student.fam_occupation}}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Admission</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <img class='mr-3' src='/media/icons/nepal.png' width="20">{{student.nepali_admission_date}}  BS
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span class="mb-0"></span>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <img class='mr-3' src='/media/icons/new-zealand.png' width="20">{{student.eng_admission_date}}  AD
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Ethnicity</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <img class='mr-3' src='/media/icons/{{student.get_ethnicity_display}}.png' width="25">{{student.get_ethnicity_display}}
+                        </div>
+                    </div>
+                    <hr>
                 </div>
             </div>
             <div class="row gutters-sm">
