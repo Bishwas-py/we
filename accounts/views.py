@@ -1,26 +1,26 @@
 from django.shortcuts import render, redirect
-from accounts.models import school_details
-from student.models import student_details
-from school.models import student_class
+from accounts.models import School
+from student.models import Student
+from school.models import Class
 import adbs
 # Create your views here.
 def dashboard(request):
     username = request.session['username']
     password = request.session['password']
     
-    school_Details = school_details.objects.get(username=username, password=password)
+    school_data = School.objects.get(username=username, password=password)
     try:
-        student_Class = school_details.objects.get(username=school_Details)
+        Class = School.objects.get(username=School)
     except:
-        student_Class = None
+        Class = None
     try:
-        student_Details = student_details.objects.get(username=school_Details)
+        Student = Student.objects.get(username=School)
     except:
-        student_Details = None
+        Student = None
     required_dict = {
-        'school_details':school_Details,
-        'student_class':student_Class,
-        'student_details':student_Details
+        'School':school_data,
+        'Class':Class,
+        'Student':Student
     }
 
     return render(request, 'themes/dashboard.html', required_dict )        
@@ -39,8 +39,8 @@ def delete_account(request):
     confirm_password=request.POST['delpassword']
     if confirm_password == change_needed_school_data.password:
         for i in range(0,len(change_needed_student_data)):
-            change_needed_student_data = student_details.objects.get(
-                username=school_details.objects.get(username=username),
+            change_needed_student_data = Student.objects.get(
+                username=School.objects.get(username=username),
                 student_short_name=change_needed_student_data[i].student_short_name
             )
 
@@ -50,14 +50,14 @@ def delete_account(request):
         change_needed_school_data.delete()
         return redirect('accounts/logout')
     else:
-        #stc == > student_class
+        #stc == > Class
         render_required_dictonary = {
-            'student_class':student_class.objects.filter(
-                username=school_details.objects.get(username=username),
+            'Class':Class.objects.filter(
+                username=School.objects.get(username=username),
                 password=password
             ),
             'wpsd':'Wrong Password...',
-            'student_details': student_details.objects.get(
+            'Student': Student.objects.get(
                 username=request.session['username']
                 )
         }
@@ -70,12 +70,12 @@ def update(request):
     password=request.session['password']
     print('Username', username, password)
 
-    change_needed_school_data = school_details.objects.get(
-        username=school_details.objects.get(username=username),
+    change_needed_school_data = School.objects.get(
+        username=School.objects.get(username=username),
         password=password
     )
-    change_needed_student_data = student_details.objects.filter(
-        username=school_details.objects.get(username=username),
+    change_needed_student_data = Student.objects.filter(
+        username=School.objects.get(username=username),
     )
 
     # try:
@@ -112,10 +112,10 @@ def profile(request):
     username = request.session['username']
     password = request.session['password']
     render_required_dictonary = {
-    'student_class':student_class.objects.filter(
-        username=school_details.objects.get(username=username)
+    'Class':Class.objects.filter(
+        username=School.objects.get(username=username)
     ),
-    'school_details': school_details.objects.get(
+    'School': School.objects.get(
         username=request.session['username'],
         password=request.session['password'])
 }
@@ -126,7 +126,7 @@ def log_in(request):
     if request.method == 'POST':
             username = request.POST['username']
             password = request.POST['password']
-            user_logged = school_details.objects.filter(username=username,password=password)
+            user_logged = School.objects.filter(username=username,password=password)
             if not user_logged:
                 return render(request, "home/home.html", {'error': 'Username or Password is incorrect...'})
             else:
@@ -165,7 +165,7 @@ def sign_in(request):
         ip = user_ip_address(request)
         
         try:
-            used_account_filter = school_details.objects.filter(email=email, username=school_details.objects.get(username=username))
+            used_account_filter = School.objects.filter(email=email, username=School.objects.get(username=username))
             if not used_account_filter.email and not used_account_filter.username:
                 error_msg = f'{username} and {email} is already used for sign in.'
                 return render(request, 'home.html', {'used_or_not':error_msg})
@@ -185,7 +185,7 @@ def sign_in(request):
         request.session['username'] = username
         request.session['password'] = password
         
-        school_data = school_details(
+        school_data = School(
             username=username,
             password=password,
             email=email,

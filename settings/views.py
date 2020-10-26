@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from school.models import student_class
-from accounts.models import school_details
-from student.models import student_details
+from school.models import Class
+from accounts.models import School
+from student.models import Student
 
 # Create your views here.
 
@@ -9,16 +9,16 @@ from student.models import student_details
 def settings(request):
     username = request.session['username']
     password = request.session['password']
-    school_data = school_details.objects.get(
+    school_data = School.objects.get(
         username=username, password=password)
     required_dictionary = {
-        'student_class': student_class.objects.filter(
+        'Class': Class.objects.filter(
             connect_school=school_data,
         ),
 
-        'school_details': school_data,
+        'School': school_data,
 
-        'student_details': student_details.objects.filter(
+        'Student': Student.objects.filter(
             connect_school=school_data
         )
     }

@@ -10,12 +10,12 @@
             {% csrf_token %}
 
             <div class="form-group">
-                <label class="control-label" for="student_name">
+                <label class="control-label" for="name">
                     Student's Name:
                 </label>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Student Name" id="student_name"
-                        name="student_name" />
+                    <input type="text" class="form-control" placeholder="Student Name" id="name"
+                        name="name" />
                 </div>
             </div>
             <div class="form-group">
@@ -34,12 +34,12 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="control-label" for="student_address">
+                <label class="control-label" for="address">
                     Student's Address:
                 </label>
                 <div>
-                    <input class="form-control" id="student_address" placeholder="Address of student"
-                        name="student_address" required />
+                    <input class="form-control" id="address" placeholder="Address of student"
+                        name="address" required />
                 </div>
             </div>
             <div class="dropdown show">
@@ -56,13 +56,13 @@
                             class="btn btn-outline-secondary" type="button"><i class="fas fa-plus"></i> ADD
                             CLASS</button>
                     </div>
-                    <select class="custom-select" name="student_class" id="student_class" required>
+                    <select class="custom-select" name="class" id="class" required>
                         <option disabled selected value="">Choose the Class</option>
-                        {% for Class in student_class  %}
-                        <option value='{{Class}}'>{{Class}}</option>
+                        {% for class in Class  %}
+                        <option value='{{class}}'>{{class}}</option>
                         {% endfor %}
                     </select>
-                    {% if not student_class %}
+                    {% if not class %}
 
 
                     <div class="input-group-append">
@@ -77,69 +77,69 @@
 
 
             <div class="form-group">
-                <label class="control-label" for="student_father">
+                <label class="control-label" for="father">
                     Father's Name:
                 </label>
                 <div>
-                    <input class="form-control" id="student_father" name="student_father" placeholder="Father's Name"
+                    <input class="form-control" id="father" name="father" placeholder="Father's Name"
                         required />
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label" for="student_mother">
+                <label class="control-label" for="mother">
                     Mother's Name:
                 </label>
                 <div>
-                    <input class="form-control" id="student_mother" name="student_mother" placeholder="Mother's Name"
+                    <input class="form-control" id="mother" name="mother" placeholder="Mother's Name"
                         required />
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label" for="student_fam_occupation">
+                <label class="control-label" for="fam_occupation">
                     Family's occupation:
                 </label>
                 <div>
-                    <input type="text" class="form-control" id="student_fam_occupation" placeholder="Family Occupation"
-                        name="student_fam_occupation" />
+                    <input type="text" class="form-control" id="fam_occupation" placeholder="Family Occupation"
+                        name="fam_occupation" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label" for="student_admission_date">
+                <label class="control-label" for="admission_date">
                     Addmission Date:
                 </label>
-                <div id='student_admission_date'>
+                <div id='admission_date'>
                     {% include "apps/datepicker.html" with today_date_function='set_today_date_for_admission' date_function='date_function_for_admission' Year="admission_year" Month="admission_month" Day="admission_day" %}
 
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label" for="student_photo">
+                <label class="control-label" for="photo">
                     Student's photo:
                 </label>
                 <div>
-                    <input id="student_photo" type="file" name="student_photo"
+                    <input id="photo" type="file" name="photo"
                         accept="image/x-png,image/gif,image/jpeg" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label" for="student_phone_number">
+                <label class="control-label" for="phone_number">
                     Phone Number:
                 </label>
                 <div>
-                    <input class="form-control" type="tel" id="student_phone_number" placeholder="Phone Number"
-                        name="student_phone_number" required />
+                    <input class="form-control" type="tel" id="phone_number" placeholder="Phone Number"
+                        name="phone_number" required />
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label" for="student_date_of_birth">
+                <label class="control-label" for="date_of_birth">
                     Date of Birth:
                 </label>
-                <div id='student_date_of_birth'>
+                <div id='date_of_birth'>
                     {% include "apps/datepicker.html" with today_date_function='set_today_date_for_dob' date_function='date_function_for_dob' Year="dob_year" Month="dob_month" Day="dob_day" %}
                 </div>
             </div>

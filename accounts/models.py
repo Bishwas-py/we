@@ -5,7 +5,7 @@ import nepali_datetime
 # from django.contrib.auth.models import User
 # Create your models here.
 
-class school_details(models.Model):
+class School(models.Model):
     school_name = models.CharField(max_length=50)
     email = models.CharField(max_length=95)
     submitted_date = models.DateTimeField(default=timezone.now)

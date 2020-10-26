@@ -75,23 +75,23 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                                {% for student in student_details %}
+                                {% for student in Student %}
                                 <tr role="row" class="even">
                                     <td>
-                                        <img src="{{student.student_photo.url}}" style="width: 63px"
-                                            alt="{{student.student_name}}: {{student.student_photo.size}}Bytes"
-                                            title="{{student.student_name}}" />
-                                        <span class="d-none">{{student.student_photo.size}}</span>
+                                        <img src="{{student.photo.url}}" style="width: 63px"
+                                            alt="{{student.name}}: {{student.photo.size}}Bytes"
+                                            title="{{student.name}}" />
+                                        <span class="d-none">{{student.photo.size}}</span>
                                     </td>
-                                    <td class="sorting_1">{{student.student_name}}</td>
-                                    <td>{{student.student_address}}</td>
-                                    <td>{{student.student_class}}</td>
-                                    <td>{{student.student_father}}</td>
-                                    <td>{{student.student_mother}}</td>
-                                    <td>{{student.student_fam_occupation}}</td>
-                                    <td>{{student.student_nepali_admission_date}}</td>
-                                    <td>{{student.student_phone_number}}</td>
-                                    <td>{{student.student_nepali_dob_date}}</td>
+                                    <td class="sorting_1"><a href='/student/profile/{{student.short_name}}' target="_blank">{{student.name}}</a></td>
+                                    <td>{{student.address}}</td>
+                                    <td>{{student.class}}</td>
+                                    <td>{{student.father}}</td>
+                                    <td>{{student.mother}}</td>
+                                    <td>{{student.fam_occupation}}</td>
+                                    <td>{{student.nepali_admission_date}}</td>
+                                    <td>{{student.phone_number}}</td>
+                                    <td>{{student.nepali_dob_date}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

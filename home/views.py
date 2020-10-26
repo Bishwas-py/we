@@ -1,15 +1,15 @@
 
 from django.shortcuts import render, redirect
-from accounts.models import school_details
+from accounts.models import School
 from django.http import HttpResponse, JsonResponse
 from django.contrib.sessions.models import Session
-from student.models import student_details
-from school.models import student_class
+from student.models import Student
+from school.models import Class
 
 # Create your views here.
 def home(request):
     try:
-        school_data = school_details.objects.filter(
+        school_data = School.objects.filter(
             username = request.session['username'],
             password = request.session['password']
         )
@@ -19,10 +19,10 @@ def home(request):
             password = request.session['password']
 
             dictonary_to_pass ={
-                'student_class':student_class.objects.filter(
+                'Class':Class.objects.filter(
                     connect_school=school_data,
                 ),
-                'school_details': school_data[0],
+                'School': school_data[0],
 
             }
             return render(request, "themes/dashboard.html", dictonary_to_pass)
