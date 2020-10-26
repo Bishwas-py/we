@@ -7,6 +7,6 @@ urlpatterns=[
     path('update_student/<ssname>', views.update_student, name='update_student'),
     path('delete/<ssname>', views.remove_student, name='remove_student'),
 
-    path('test', views.test, name='test')
+    path('profile/<ssname>', views.student_profile, name='student_profile')
 ]
 

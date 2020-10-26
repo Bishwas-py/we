@@ -68,15 +68,15 @@ def student(request):
 
     return render(request, 'themes/students.html', required_dict)
 
-def test(request):
+def student_profile(request, ssname):
     username=request.session['username']
     password=request.session['password']
-    school_Details = school_details.objects.get(username=username, password=password)
-    student_Class = student_class.objects.filter(connect_school=school_Details)
-    student_data = student_details.objects.filter(connect_school=school_Details)
+    school_data = school_details.objects.get(username=username, password=password)
+    student_class_data = student_class.objects.filter(connect_school=school_data)
+    student_data = student_details.objects.filter(connect_school=school_data, student_short_name=ssname)
     required_dict = {
-        'school_details':school_Details,
-        'student_class':student_Class,
+        'school_details':school_data,
+        'student_class':student_class_data,
         'student_details':student_data
     }
 
