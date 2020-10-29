@@ -1,5 +1,5 @@
 from django.contrib import admin
-from school.models import Class
+from school.models import Class #, Subject
 from accounts.models import School
 # Register your models here.
 class StudentClassAdmin(admin.ModelAdmin):
@@ -9,3 +9,12 @@ class StudentClassAdmin(admin.ModelAdmin):
 
     list_display = ('class_list','connect_school',)
 admin.site.register(Class, StudentClassAdmin)
+
+
+# class StudentSubjectAdmin(admin.ModelAdmin):
+#     fieldsets = ((None, {'fields': [
+#                                 'subjects',
+#                                 'connect_class',]}),)
+
+#     list_display = ('class_list','connect_class',)
+# admin.site.register(Subject, StudentSubjectAdmin)

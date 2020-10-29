@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 import nepali_datetime
-from school.models import Class
+from school.models import Class #, Subject
 from accounts.models import School
 
 # Create your models here.
@@ -16,7 +16,7 @@ class Student(models.Model):
     ethnicity = models.CharField(max_length=9, choices=ethnic_groups, default='1')
     short_name = models.CharField(max_length=150, null=True)
     address = models.CharField(max_length=150, null=False)
-    Class = models.ForeignKey(Class, on_delete=models.CASCADE, null=True)
+    Class = models.ForeignKey(Class, on_delete=models.SET_DEFAULT, null=True, default="Null Class")
     father = models.CharField(max_length=150, null=True)
     mother = models.CharField(max_length=150, null=True)
     fam_occupation = models.CharField(max_length=150, null=True)
@@ -31,6 +31,8 @@ class Student(models.Model):
     
     phone_number = models.CharField(max_length=95, null=True)
     photo = models.ImageField(max_length=500, upload_to='', default='/media/web/')
+
+    # subject = models.ManyToManyField(Subject)
 
     #(""), upload_to=None, height_field=None, width_field=None,
     
