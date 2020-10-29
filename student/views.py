@@ -4,37 +4,62 @@ from student.models import Student
 from school.models import Class
 from accounts.models import School
 
+
 # Create your views here.
-def remove_student(request, ssname):
-    username=request.session['username']
-    password=request.session['password']
-    student_data = Student.objects.get(username=username, password=password, ssname=ssname)
-    student_data.stpht.delete(save=True)
-    student_data.delete()
-    return redirect ('student')
+def delete(request, short_name):
+    print('short_name', short_name)
+    if request.method == 'POST':
+        username=request.session['username']
+        password=request.POST.get('password')
+
+        try:
+            print('Success')
+            school_data = School.objects.get(username=username, password=password)
+            student_data = Student.objects.get(connect_school=school_data, short_name=short_name)
+            print('Success')
+            student_data.photo.delete(save=True)
+            student_data.delete()
+            required_dict = {
+                    'success_value':'success',
+                    'success_message':f"The student is deleted successfullly.",
+                    'success_body':f"You will be redirected to 'Our student' table page.",
+                    'success_remarks':'Success'
+            }
+            return JsonResponse (required_dict)
+        except:
+            print('Failed')
+            required_dict = {
+                'success_value':'danger',
+                'success_message':f"The student isn't deleted.",
+                'success_body':f"Please re-type your actual password and try again.",
+                'success_remarks':'Faluire'
+            }
+            return JsonResponse (required_dict)
+    else:
+        return redirect('student')
 
 
-def update_student(request, ssname):
+def update_student(request, short_name):
     username = request.session['username']
     password=request.session['password']
     student_data = Student.objects.get(
         username=username,
         password=password,
-        ssname=ssname)
+        short_name=short_name)
 
     try:
         cLass = Class.objects.get(
             username=username, 
             password=password, 
-            ssname=ssname)
+            short_name=short_name)
     except:
         None
     
-    student_address = request.POST.get(f'{student_data.ssname}1')
-    Class = request.POST.get(f'{student_data.ssname}2')
-    student_fam_occupation = request.POST.get(f'{student_data.ssname}3')
-    student_phone_num = request.POST.get(f'{student_data.ssname}4')
-    stpht = request.FILES.get(f'{student_data.ssname}5')
+    student_address = request.POST.get(f'{student_data.short_name}1')
+    Class = request.POST.get(f'{student_data.short_name}2')
+    student_fam_occupation = request.POST.get(f'{student_data.short_name}3')
+    student_phone_num = request.POST.get(f'{student_data.short_name}4')
+    stpht = request.FILES.get(f'{student_data.short_name}5')
     if stadd != None:
         student_data.stadd = stadd
         student_data.save()
@@ -68,12 +93,14 @@ def student(request):
 
     return render(request, 'themes/students.html', required_dict)
 
-def student_profile(request, ssname):
+
+
+def student_profile(request, short_name):
     username=request.session['username']
     password=request.session['password']
     school_data = School.objects.get(username=username, password=password)
     Class_data = Class.objects.filter(connect_school=school_data)
-    student_data = Student.objects.filter(connect_school=school_data, short_name=ssname)
+    student_data = Student.objects.filter(connect_school=school_data, short_name=short_name)
     required_dict = {
         'School':school_data,
         'Class':Class_data,
@@ -110,6 +137,8 @@ def add_student(request):
                 'success_remarks':'Faliure'
             }
             return JsonResponse(required_dict)
+
+
         short_name = name.replace(' ','')
         address = request.POST.get('address')
         father = request.POST.get('father')
@@ -122,15 +151,16 @@ def add_student(request):
         admission_dates = convert(admission_year, admission_month, admission_day)
         nepali_admission_date = admission_dates['np']
         eng_admission_date = admission_dates['en']
+        admission_date = admission_dates['nm']
         """   DATE OF BIRTH DATES    """
         dob_year, dob_month, dob_day = request.POST['dob_year'], request.POST['dob_month'], request.POST['dob_day']
         dob_dates = convert(dob_year, dob_month, dob_day)
         nepali_dob_date =  dob_dates['np']
         eng_dob_date = dob_dates['en']
+        dob_date = dob_dates['nm']
 
         phone_number= request.POST.get('phone_number')
         photo = request.FILES.get('photo')
-        print('photo:',photo)
 
         
         is_student_created = Student.objects.filter(
@@ -141,7 +171,6 @@ def add_student(request):
                 father=father,
                 eng_dob_date=eng_dob_date
             )
-
         if is_student_created:
             required_dict = {
                 'success_value':'danger',
@@ -165,9 +194,12 @@ def add_student(request):
             # DATES - ADmission
             nepali_admission_date = nepali_admission_date,
             eng_admission_date = eng_admission_date,
+            admission_date = admission_date,
+
             # DATES - DATE OF BIRTH
             nepali_dob_date = nepali_dob_date,
             eng_dob_date = eng_dob_date,
+            dob_date = dob_date,
             
             phone_number = phone_number,
             photo = photo

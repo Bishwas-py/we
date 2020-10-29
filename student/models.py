@@ -3,6 +3,7 @@ from django.utils import timezone
 import nepali_datetime
 from school.models import Class
 from accounts.models import School
+
 # Create your models here.
 class Student(models.Model):
     connect_school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
@@ -19,10 +20,15 @@ class Student(models.Model):
     father = models.CharField(max_length=150, null=True)
     mother = models.CharField(max_length=150, null=True)
     fam_occupation = models.CharField(max_length=150, null=True)
+    
     nepali_admission_date = models.CharField(default=str(nepali_datetime.date.today()), max_length=150, null=True)
     eng_admission_date = models.CharField(default=timezone.now, max_length=150, null=True)
-    nepali_dob_date = models.CharField(default=str(nepali_datetime.date.today()), max_length=150, null=True)
+    admission_date = models.DateField(default=timezone.now, max_length=150, null=True)
+
+    nepali_dob_date = models.CharField(default=str(nepali_datetime.date.today()), max_length=150, null=True)    
     eng_dob_date = models.CharField(default=timezone.now, max_length=150, null=True)
+    dob_date = models.DateField(default=timezone.now, max_length=150, null=True)
+    
     phone_number = models.CharField(max_length=95, null=True)
     photo = models.ImageField(max_length=500, upload_to='', default='/media/web/')
 
