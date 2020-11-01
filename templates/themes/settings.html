@@ -9,32 +9,33 @@
     <div class="row">
         <div class='col-lg-6'>
 
-            <div class="card shadow mb-4">
+            <div id='create-class' class="card shadow mb-4">
                 <!-- Card Header - Accordion -->
-                <a href="#collapseClass" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseClass">
+                <a href="#collapseClass" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                    aria-expanded="true" aria-controls="collapseClass">
                     <h6 class="m-0 font-weight-bold text-primary">Create the classes here.</h6>
                 </a>
                 <!-- Card Content - Collapse -->
-                <div class="collapse show" id="collapseClass">
+                <div class="collapse hide" id="collapseClass">
                     <div class="card-body">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="classInput">Class or Grade</label>
-                            <input type="text" class="form-control" id="classInput" name="class" aria-describedby="classHelp" placeholder="Example: Kindergarten, 1, 2, 3, etc." />
-                            <small id="classHelp" class="form-text text-muted">Create the class that<strong><em> {{school_details.school_name}} </em></strong> has.</small>
-                            <small id='class-created' class="form-text text-muted"></small>
-                        </div>
-                        <button onclick="create_class()" href="#" class="btn btn-info btn-icon-split">
-                            <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
-                            <span class="text" style="padding-left: 25px;padding-right: 25px;">Submit</span>
-                        </button>
+                        {% include "add_class.html" %}
+                    </div>
+                </div>
+            </div>
 
+            <div class="card shadow mb-4">
+                <div href="#collapseSubjects" class="d-block card-header py-3" data-toggle="collapse" role="button"
+                    aria-expanded="true" aria-controls="collapseSubjects">
+                    <h6 class="m-0 font-weight-bold text-primary">Create Subjects</h6>
+                </div>
+                <div class="collapse hide" id="collapseSubjects">
+                    <div class="card-body">
+                        {% include "add_subject.html" %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="{% static 'student/js/add-student.ajax.js' %}"></script>
 
 {% endblock %}

@@ -44,3 +44,6 @@ def todaydate(request):
     date = str(nepali_datetime.date.today()).split('-')
     date = {'year':date[0],'month':date[1], 'day':date[2]}
     return JsonResponse(date)
+
+def website(request):
+    return render(request,'index.html')

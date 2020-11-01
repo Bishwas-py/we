@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from student.models import Student
-from school.models import Class
+from school.models import Class, Subject
 from accounts.models import School
 
 
@@ -161,8 +161,16 @@ def add_student(request):
 
         phone_number= request.POST.get('phone_number')
         photo = request.FILES.get('photo')
-
-        
+        subject = Subject.objects.filter(connect_class=class_list)
+        if not subject:
+            required_dict = {
+                'success_value':'danger',
+                'success_message':f"Please create some subjects.",
+                'success_body':f"""Please create some subjects like: English, Nepali, etc. <a href="/school/create-subjects" target="_blank">Click here</a> to create subjects. Visit there, create subjects and come back here.""",
+                'success_remarks':'Faliure'
+                }
+            return JsonResponse(required_dict)
+        print('subject::: ', subject)
         is_student_created = Student.objects.filter(
                 connect_school=school_data,
                 name=name,
@@ -202,9 +210,12 @@ def add_student(request):
             dob_date = dob_date,
             
             phone_number = phone_number,
-            photo = photo
+            photo = photo,
+
         )
         student_data.save()
+        student_data.subject.add(*subject)
+
         required_dict = {
             'success_value':'success',
             'success_message':f'{name} is created.',

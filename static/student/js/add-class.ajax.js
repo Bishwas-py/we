@@ -49,22 +49,11 @@
                       $("#student_class").append(option);
 
                   }
-                  $('#toast-head-message').html('Classes created automatically');
-                  $('#toast-head-message').attr("class", 'mr-auto text-'+'success');
-                  $('#toast-success-or-faliure').attr("class", 'text-'+'success');
-                  $('#toast-success-or-faliure').html('Success');
-                  $('#toast-success-message').html('The class are created successfully. Now, you can procced to next step.');
-                  $('.toast').toast('show')
-
-
+                  toast_show(data);
               }
               else{
-                $('#toast-head-message').html('Classes are already created automatically');
-                $('#toast-head-message').attr("class", 'mr-auto text-'+'success');
-                $('#toast-success-or-faliure').attr("class", 'text-'+'danger');
-                $('#toast-success-or-faliure').html('Failure');
-                $('#toast-success-message').html('The class are already created automatically. You can procced to next step.');
-                $('.toast').toast('show')
+                  toast_show(data);
+                
 
               }
           }

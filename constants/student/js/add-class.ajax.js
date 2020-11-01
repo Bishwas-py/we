@@ -36,37 +36,21 @@
           url: '/school/auto-class-create',
           type: 'post',
           data: {
-            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
-            },
+              'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+          },
           success: function (data) {
-              if (data == 1) {
-                  class_list = ['Nursery', 'L.K.G', 'U.K.G', 'Kindergarten', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10']
-                  for (i = 0; i < class_list.length; i++) {
+              class_list = ['Nursery', 'L.K.G', 'U.K.G', 'Kindergarten', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10']
+              for (i = 0; i < class_list.length; i++) {
 
-                      var option = new Option(class_list[i], class_list[i]);
-                      /// jquerify the DOM object 'o' so we can use the html method
-                      $(option).html(class_list[i]);
-                      $("#student_class").append(option);
-
-                  }
-                  $('#toast-head-message').html('Classes created automatically');
-                  $('#toast-head-message').attr("class", 'mr-auto text-'+'success');
-                  $('#toast-success-or-faliure').attr("class", 'text-'+'success');
-                  $('#toast-success-or-faliure').html('Success');
-                  $('#toast-success-message').html('The class are created successfully. Now, you can procced to next step.');
-                  $('.toast').toast('show')
-
-
+                  var option = new Option(class_list[i], class_list[i]);
+                  /// jquerify the DOM object 'o' so we can use the html method
+                  $(option).html(class_list[i]);
+                  $("#class").append(option);
+                  $("#class").val(class_list[i]);
+                  console.log('Did we worked')
+                  
               }
-              else{
-                $('#toast-head-message').html('Classes are already created automatically');
-                $('#toast-head-message').attr("class", 'mr-auto text-'+'success');
-                $('#toast-success-or-faliure').attr("class", 'text-'+'danger');
-                $('#toast-success-or-faliure').html('Failure');
-                $('#toast-success-message').html('The class are already created automatically. You can procced to next step.');
-                $('.toast').toast('show')
-
-              }
+              show_toast(data);
           }
       })
   }

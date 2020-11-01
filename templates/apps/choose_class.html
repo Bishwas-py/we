@@ -1,0 +1,24 @@
+<label class="control-label" for="classoptions"> Current Class: </label>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <button data-target="#addClassModal" data-toggle="modal" href="#" class="btn btn-outline-secondary"
+            type="button"><i class="fas fa-plus"></i> ADD
+            CLASS</button>
+    </div>
+    <select class="custom-select" name="class" id="class" required>
+        <option disabled selected value="">Choose the Class</option>
+        {% for class in Class  %}
+        <option value='{{class}}'>{{class}}</option>
+        {% endfor %}
+    </select>
+    {% if not Class %}
+
+
+    <div class="input-group-append">
+        <button data-toggle="modal" href="#" class="btn btn-outline-secondary" type="button"
+            onclick="automatic_class()">Create Automatically</button>
+    </div>
+    <small id='auto-class-created' class="form-text text-muted"></small>
+    {% endif %}
+
+</div>

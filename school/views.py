@@ -1,6 +1,8 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
+from django.http import HttpResponse, JsonResponse
 from accounts.models import School 
-from school.models import Class
+from school.models import Class, Subject
+from student.models import Student
 # Create your views here.
 def profile(request):
     username= request.session['username']
@@ -41,9 +43,42 @@ def automatic_class(request):
             else:
                 already_created.append(class_)
         if len(already_created) == len(create_class):
-            return HttpResponse(0)
+            required_dict = {
+                'success_value':'primary',
+                'success_message':f"Classes are already created.",
+                'success_body':f"The class are already created. You can procced to next step.",
+                'success_remarks':'Success'
+                }
+            return JsonResponse(required_dict)
         else:
-            return HttpResponse(1)
+            required_dict = {
+                'success_value':'success',
+                'success_message':f"Classes created automatically",
+                'success_body':f"The class are already created automatically. You can procced to next step.",
+                'success_remarks':'Success'
+                }
+            return JsonResponse(required_dict)
     else:
         return HttpResponse(0)
         
+def add_subject(request):
+    if request.method == 'GET':
+        return redirect('settings')
+    elif request.method == 'POST':
+        username = request.session['usernmae']
+        password = request.session['password']
+        class_ = request.POST.get('class')
+        subject = request.POST.get('subject')
+        school_data = School.objects.get(username=username, password=password)
+        connect_class = Class.objects.get(class_list=class_)
+        subject_required = Subject(
+            connect_class=connect_class,
+            subject = subject
+        )
+
+        required_data = {
+            'success_value':'success',
+            'success_message': f'{subject} created successfully.',
+            'success_body': f"The {subject} subject created. You can procced to next step.",
+            'success_remarks': f'Success'
+        }

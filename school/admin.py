@@ -1,5 +1,5 @@
 from django.contrib import admin
-from school.models import Class #, Subject
+from school.models import Class , Subject
 from accounts.models import School
 # Register your models here.
 class StudentClassAdmin(admin.ModelAdmin):
@@ -18,3 +18,4 @@ admin.site.register(Class, StudentClassAdmin)
 
 #     list_display = ('class_list','connect_class',)
 # admin.site.register(Subject, StudentSubjectAdmin)
+admin.site.register(Subject)
