@@ -65,7 +65,8 @@ def add_subject(request):
     if request.method == 'GET':
         return redirect('settings')
     elif request.method == 'POST':
-        username = request.session['usernmae']
+        print(request.POST)
+        username = request.session['username']
         password = request.session['password']
         class_ = request.POST.get('class')
         subject = request.POST.get('subject')
@@ -73,8 +74,9 @@ def add_subject(request):
         connect_class = Class.objects.get(class_list=class_)
         subject_required = Subject(
             connect_class=connect_class,
-            subject = subject
+            subjects = subject
         )
+        subject_required.save()
 
         required_data = {
             'success_value':'success',
@@ -82,3 +84,4 @@ def add_subject(request):
             'success_body': f"The {subject} subject created. You can procced to next step.",
             'success_remarks': f'Success'
         }
+        return JsonResponse(required_data)

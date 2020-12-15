@@ -1,5 +1,7 @@
 
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+
 from accounts.models import School
 from django.http import HttpResponse, JsonResponse
 from django.contrib.sessions.models import Session
@@ -8,27 +10,32 @@ from school.models import Class
 
 # Create your views here.
 def home(request):
-    try:
-        school_data = School.objects.filter(
-            username = request.session['username'],
-            password = request.session['password']
-        )
+    # try:
+    username = request.session['username']
+    password = request.session['password']
+    print(f'username: {username}, password: {password}')
+    school_user = authenticate(username=username, password=password)
+    if school_user is not None:
+        login(request, school_user)
+        print('here2')
 
-        if school_data:
-            username = request.session['username']
-            password = request.session['password']
+        dictonary_to_pass ={
+            'Class':Class.objects.filter(
+                connect_school=school_user,
+            ),
+            'School': school_user[0],
 
-            dictonary_to_pass ={
-                'Class':Class.objects.filter(
-                    connect_school=school_data,
-                ),
-                'School': school_data[0],
-
-            }
-            return render(request, "themes/dashboard.html", dictonary_to_pass)
-    except:
-        return render(request,'home/home.html')
+        }
+        return render(request, "themes/dashboard.html", dictonary_to_pass)
+    # except:
+    #     return render(request,'home/home.html')
         
+
+def login(request):
+    return render(request,'home/login.html')
+def register(request):
+    return render(request,'home/signin.html')
+
 
 
 def max_nepali_day(request):

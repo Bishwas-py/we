@@ -1,3 +1,85 @@
+{% extends 'home/initials.base.html' %}
+{% block content %}
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+            <div class="col-lg-7">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                    </div>
+                    <form class='user' action="/accounts/sign-in" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input minlength="5" type="text" class="form-control form-control-user" name='school_name' id="SchoolName"
+                                    placeholder="School's Name" required>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="email" minlength="5" name='email' class="form-control form-control-user" id="SchoolEmail"
+                                    placeholder="School's Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" minlength="5" class="form-control form-control-user" name='address' id="SchoolAddress"
+                                    placeholder="School's Address" required>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name='principal' minlength="5" class="form-control form-control-user" id="PrincipalName"
+                                placeholder="Principal's Name" required>
+                            </div>
+                        </div>
+                        <div style='font-size: 12px;display: block;'>
+                            Established Date
+                        </div>
+                        {% include 'apps/datepicker.html' with today_date_function='set_today_date_for_establishment' date_function='date_function_for_establishment' Year='year' Month='month' Day='day' %}
+                        
+                        <div class="form-group row">
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                <input type="number" name="student_number" min='5' class="form-control form-control-user" name='address' id="SchoolAddress"
+                                    placeholder="No. of students" required>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" name='username' class="form-control form-control-user" id="PrincipalName"
+                                placeholder="Username" required>
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="password" name='password' class="form-control form-control-user"
+                                    id="Password" placeholder="Password" required>
+                            </div>
+                        </div>
+                        
+                        {% if error_msg %}
+                        <small class="text-muted">{{error_msg}}</small>
+                        {% endif %}
+                        
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            Register Account
+                        </button>
+                        <hr>
+                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                            <i class="fab fa-google fa-fw"></i> Register with Google
+                        </a>
+                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                            <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                        </a>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="login.html">Already have an account? Login!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
 <div class="col-md-6 login-form-2">
     <h3>Add a school</h3>
     <script>
@@ -10,53 +92,56 @@
 
     </script>
     {{used_or_not}}
-    <form action="/accounts/sign-in" method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            School's Name
-            <input type="text" maxlength=50 name='school_name' minlength=7 class="form-control"
-                placeholder="School Name *" required>
-        </div>
-        <div class="form-group">
-            School's Email
-            <input type="email" class="form-control" name='email' placeholder="Email *" value="" required>
-        </div>
-        <div class="form-group">
-            Principal's Name
-            <input type="text" maxlength=55 name='principal' minlength=7 class="form-control"
-                placeholder="Principal's Name *" required>
-        </div>
-        <div class="form-group">
-            Address of School
-            <input type="text" maxlength=105 name='address' minlength=7 class="form-control"
-                placeholder="School's Address *" required>
-        </div>
-        <div class="form-group">
-            <span class='d-block'>Date of Establishment</span>
-            {% include 'apps/datepicker.html' with today_date_function='set_today_date_for_establishment' date_function='date_function_for_establishment' Year='year' Month='month' Day='day' %}
-
-        </div>
-        <div class="form-group">
-            Number of students
-            <input type="number" name='student_number' class="form-control" placeholder="1000 *" required>
-        </div>
-        <div class="form-group">
-            School's Website or Facebook Page
-            <input type="url" name='school_website' minlength=7 class="form-control" value="https:// ">
-        </div>
-        <div class="form-group">
-            Choose Username
-            <input type="text" maxlength=15 name='username' minlength=3 class="form-control" placeholder="Username *"
-                value="" required>
-        </div>
-        <div class="form-group">
-            Choose A Password
-            <input type="password" class="form-control" name='password' placeholder="Password *" value="" required>
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btnSubmit btn-block" value="Add School" />
-        </div>
-
-    </form>
+   
 </div>
+<!-- 
+    <form class='user' action="/accounts/sign-in" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        School's Name
+        <input type="text" maxlength=50 name='school_name' minlength=7 class="form-control"
+            placeholder="School Name *" required>
+    </div>
+    <div class="form-group">
+        School's Email
+        <input type="email" class="form-control" name='email' placeholder="Email *" value="" required>
+    </div>
+    <div class="form-group">
+        Principal's Name
+        <input type="text" maxlength=55 name='principal' minlength=7 class="form-control"
+            placeholder="Principal's Name *" required>
+    </div>
+    <div class="form-group">
+        Address of School
+        <input type="text" maxlength=105 name='address' minlength=7 class="form-control"
+            placeholder="School's Address *" required>
+    </div>
+    <div class="form-group">
+        <span class='d-block'>Date of Establishment</span>
+        {% include 'apps/datepicker.html' with today_date_function='set_today_date_for_establishment' date_function='date_function_for_establishment' Year='year' Month='month' Day='day' %}
+
+    </div>
+    <div class="form-group">
+        Number of students
+        <input type="number" name='student_number' class="form-control" placeholder="1000 *" required>
+    </div>
+    <div class="form-group">
+        School's Website or Facebook Page
+        <input type="url" name='school_website' minlength=7 class="form-control" value="https:// ">
+    </div>
+    <div class="form-group">
+        Choose Username
+        <input type="text" maxlength=15 name='username' minlength=3 class="form-control" placeholder="Username *"
+            value="" required>
+    </div>
+    <div class="form-group">
+        Choose A Password
+        <input type="password" class="form-control" name='password' placeholder="Password *" value="" required>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btnSubmit btn-block" value="Add School" />
+    </div>
+
+</form>
+ -->

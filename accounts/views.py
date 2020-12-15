@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from accounts.models import School
 from student.models import Student
 from school.models import Class
+from .forms import LoginForm
 import adbs
 # Create your views here.
 def dashboard(request):
@@ -68,7 +70,6 @@ def update(request):
     #using ajax
     username=request.session['username']
     password=request.session['password']
-    print('Username', username, password)
 
     change_needed_school_data = School.objects.get(
         username=School.objects.get(username=username),
@@ -123,22 +124,20 @@ def profile(request):
 
 
 def log_in(request):
-    if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
-            user_logged = School.objects.filter(username=username,password=password)
-            if not user_logged:
-                return render(request, "home/home.html", {'error': 'Username or Password is incorrect...'})
-            else:
-                print('I am here')
-                request.session['username'] = username
-                request.session['password'] = password
-                return redirect('dashboard')
-    else:
-        if request.session.has_key('username') and request.session.has_key('password'):
-            return redirect('home')
-        else:
-            return render(request, 'home/home.html', {'signin':f'Please sign in to surf DASHBOARD.'})
+    form = LoginForm(request.POST)
+
+    if form.is_valid():
+        return HttpResponse("Done !!!")
+            # else:
+            #     print('I am here')
+            #     request.session['username'] = username
+            #     request.session['password'] = password
+    #         #     return redirect('dashboard')
+    # else:
+    #     if request.session.has_key('username') and request.session.has_key('password'):
+    #         return redirect('home')
+    #     else:
+    #         return render(request, 'home/home.html', {'signin':f'Please sign in to surf DASHBOARD.'})
 
 
 def sign_in(request):
@@ -161,22 +160,21 @@ def sign_in(request):
         established_date = dates['en']
 
         student_number = request.POST['student_number']
-        school_website = request.POST['school_website']
-        ip = user_ip_address(request)
-        
+        ip = request.META.get('REMOTE_ADDR', None)
+        print('USER is CREATING')
         try:
             used_account_filter = School.objects.filter(email=email, username=School.objects.get(username=username))
             if not used_account_filter.email and not used_account_filter.username:
                 error_msg = f'{username} and {email} is already used for sign in.'
-                return render(request, 'home.html', {'used_or_not':error_msg})
+                return render(request, 'home.html', {'error_msg':error_msg})
 
             if not used_account_filter.email:
                 error_msg = f'{email} is already used for sign in.'
-                return render(request, 'home.html', {'used_or_not':error_msg})
+                return render(request, 'home.html', {'error_msg':error_msg})
 
             if not used_account_filter.username:
                 error_msg = f'{username} is already used for sign in.'
-                return render(request, 'home.html', {'used_or_not':error_msg})
+                return render(request, 'home.html', {'error_msg':error_msg})
 
         except:
             None
@@ -185,7 +183,7 @@ def sign_in(request):
         request.session['username'] = username
         request.session['password'] = password
         
-        school_data = School(
+        school_data = School.objects.create_user(
             username=username,
             password=password,
             email=email,
@@ -195,10 +193,10 @@ def sign_in(request):
             established_date=established_date,
             nepali_established_date=nepali_established_date,
             student_number=student_number,
-            school_website=school_website,
             user_ip=ip
         )
         school_data.save()
+        print('User Created')
         return redirect('/accounts/dashboard')
     else:
         return render(request, 'home/home.html', {'signin':f'Please sign in to surf DASHBOARD.'})
