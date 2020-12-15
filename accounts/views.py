@@ -9,21 +9,12 @@ from accounts.models import School
 from student.models import Student
 from school.models import Class
 
-from .forms import LoginForm
-
 
 # Create your views here.
 def dashboard(request):
-    """
-    :param request:
-    :return:
-    required_dict = {
-        'School':school_data,
-        'Class':Class,
-        'Student':Student
-    }"""
+    required_dict = {}
 
-    return render(request, 'themes/dashboard.html', required_dict )        
+    return render(request, 'themes/dashboard.html', required_dict)
 
 
 def user_ip_address(request):
@@ -36,7 +27,7 @@ def user_ip_address(request):
 
 
 def delete_account(request):
-    confirm_password=request.POST['delpassword']
+    confirm_password = request.POST['delpassword']
     if confirm_password == change_needed_school_data.password:
         for i in range(0,len(change_needed_student_data)):
             change_needed_student_data = Student.objects.get(

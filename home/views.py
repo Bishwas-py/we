@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
@@ -7,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.sessions.models import Session
 from student.models import Student
 from school.models import Class
+
 
 # Create your views here.
 def home(request):
@@ -19,8 +19,8 @@ def home(request):
         login(request, school_user)
         print('here2')
 
-        dictonary_to_pass ={
-            'Class':Class.objects.filter(
+        dictonary_to_pass = {
+            'Class': Class.objects.filter(
                 connect_school=school_user,
             ),
             'School': school_user[0],
@@ -29,8 +29,6 @@ def home(request):
         return render(request, "themes/dashboard.html", dictonary_to_pass)
     # except:
     #     return render(request,'home/home.html')
-        
-
 
 
 def max_nepali_day(request):
@@ -44,8 +42,9 @@ def max_nepali_day(request):
 def todaydate(request):
     import nepali_datetime
     date = str(nepali_datetime.date.today()).split('-')
-    date = {'year':date[0],'month':date[1], 'day':date[2]}
+    date = {'year': date[0], 'month': date[1], 'day': date[2]}
     return JsonResponse(date)
 
+
 def website(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
