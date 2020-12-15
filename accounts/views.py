@@ -1,29 +1,27 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+# AD to BS
+import adbs
+from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib import messages
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponse, HttpResponseRedirect
+
 from accounts.models import School
 from student.models import Student
 from school.models import Class
+
 from .forms import LoginForm
-import adbs
+
+
 # Create your views here.
 def dashboard(request):
-    username = request.session['username']
-    password = request.session['password']
-    
-    school_data = School.objects.get(username=username, password=password)
-    try:
-        Class = School.objects.get(username=School)
-    except:
-        Class = None
-    try:
-        Student = Student.objects.get(username=School)
-    except:
-        Student = None
+    """
+    :param request:
+    :return:
     required_dict = {
         'School':school_data,
         'Class':Class,
         'Student':Student
-    }
+    }"""
 
     return render(request, 'themes/dashboard.html', required_dict )        
 
@@ -124,20 +122,24 @@ def profile(request):
 
 
 def log_in(request):
-    form = LoginForm(request.POST)
+    if request.method == 'GET':
+        return render(request, 'home/login.html')
 
-    if form.is_valid():
-        return HttpResponse("Done !!!")
-            # else:
-            #     print('I am here')
-            #     request.session['username'] = username
-            #     request.session['password'] = password
-    #         #     return redirect('dashboard')
-    # else:
-    #     if request.session.has_key('username') and request.session.has_key('password'):
-    #         return redirect('home')
-    #     else:
-    #         return render(request, 'home/home.html', {'signin':f'Please sign in to surf DASHBOARD.'})
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        print(username, password)
+
+        if username is None or password is None:
+            messages.error(request, "Wrong username or password")
+            return HttpResponseRedirect(reverse('log_in'))
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            login(request, user)
+            return HttpResponseRedirect(reverse('dashboard'))
 
 
 def sign_in(request):
