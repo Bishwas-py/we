@@ -1,7 +1,7 @@
 from django.urls import path
 from.import views
 
-urlpatterns=[
+urlpatterns = [
     path('log-in', views.log_in, name='log_in'),
     path('logout', views.log_out,name='logout'),
     path('register', views.register, name='register'),
@@ -10,3 +10,28 @@ urlpatterns=[
     path('dashboard', views.dashboard, name='dashboard'),
 
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

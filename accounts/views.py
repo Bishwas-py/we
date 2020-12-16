@@ -1,15 +1,26 @@
+<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+=======
+# AD to BS
+import adbs
+from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib import messages
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponse, HttpResponseRedirect
+
+>>>>>>> 2ead9db9503d20ce0112d399f05588fb12326618
 from accounts.models import School
 from student.models import Student
 from school.models import Class
-from .forms import LoginForm
-import adbs
+
+
 # Create your views here.
 
 
 def dashboard(request):
+<<<<<<< HEAD
     username = request.session['username']
     password = request.session['password']
     Class = School.objects.get(username=request.user)
@@ -17,8 +28,11 @@ def dashboard(request):
         'Class':Class,
         'Student':Student
     }
+=======
+    required_dict = {}
+>>>>>>> 2ead9db9503d20ce0112d399f05588fb12326618
 
-    return render(request, 'themes/dashboard.html', required_dict )        
+    return render(request, 'themes/dashboard.html', required_dict)
 
 
 
@@ -117,7 +131,7 @@ def user_ip_address(request):
 
 
 def delete_account(request):
-    confirm_password=request.POST['delpassword']
+    confirm_password = request.POST['delpassword']
     if confirm_password == change_needed_school_data.password:
         for i in range(0,len(change_needed_student_data)):
             change_needed_student_data = Student.objects.get(
@@ -200,3 +214,89 @@ def profile(request):
     return render(request, "themes/profile.html", render_required_dictonary)
 
 
+<<<<<<< HEAD
+=======
+def log_in(request):
+    if request.method == 'GET':
+        return render(request, 'home/login.html')
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        print(username, password)
+
+        if username is None or password is None:
+            messages.error(request, "Wrong username or password")
+            return HttpResponseRedirect(reverse('log_in'))
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            login(request, user)
+            return HttpResponseRedirect(reverse('dashboard'))
+
+
+def sign_in(request):
+        #register
+    if request.session.has_key('username') and request.session.has_key('password'):
+            return redirect('home')
+    if request.method =='POST':
+        school_name=request.POST['school_name']
+        email=request.POST['email']
+        username=request.POST['username']
+        password=request.POST['password']
+        address = request.POST['address']
+        principal = request.POST['principal']
+        """   DATES    """
+        year, month, day = request.POST['year'], request.POST['month'], request.POST['day']
+        
+        from modules.date_works import convert
+        dates = convert(year, month, day)
+        nepali_established_date =  dates['np']
+        established_date = dates['en']
+
+        student_number = request.POST['student_number']
+        ip = request.META.get('REMOTE_ADDR', None)
+        print('USER is CREATING')
+        try:
+            used_account_filter = School.objects.filter(email=email, username=School.objects.get(username=username))
+            if not used_account_filter.email and not used_account_filter.username:
+                error_msg = f'{username} and {email} is already used for sign in.'
+                return render(request, 'home.html', {'error_msg':error_msg})
+
+            if not used_account_filter.email:
+                error_msg = f'{email} is already used for sign in.'
+                return render(request, 'home.html', {'error_msg':error_msg})
+
+            if not used_account_filter.username:
+                error_msg = f'{username} is already used for sign in.'
+                return render(request, 'home.html', {'error_msg':error_msg})
+
+        except:
+            None
+        
+        
+        request.session['username'] = username
+        request.session['password'] = password
+        
+        school_data = School.objects.create_user(
+            username=username,
+            password=password,
+            email=email,
+            school_name=school_name,
+            principal=principal,
+            address=address,
+            established_date=established_date,
+            nepali_established_date=nepali_established_date,
+            student_number=student_number,
+            user_ip=ip
+        )
+        school_data.save()
+        print('User Created')
+        return redirect('/accounts/dashboard')
+    else:
+        return render(request, 'home/home.html', {'signin':f'Please sign in to surf DASHBOARD.'})
+
+
+>>>>>>> 2ead9db9503d20ce0112d399f05588fb12326618

@@ -1,8 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser   # Absctract User 
+from django.contrib.auth.models import AbstractUser  # Absctract User
 
 from django.utils import timezone
 import nepali_datetime
+
 
 # Create your models here.
 
@@ -13,7 +14,7 @@ class School(AbstractUser):
     address = models.CharField(max_length=100, default='Nepal')
     established_date = models.CharField(default=timezone.now, max_length=95)
     nepali_established_date = models.CharField(default=str(nepali_datetime.date.today()), max_length=95)
-    student_number = models.IntegerField(default=0) #number of student
+    student_number = models.IntegerField(default=0)  # number of student
     school_website = models.URLField(max_length=200, default='')
     user_ip = models.CharField(max_length=95)
     logo = models.ImageField(max_length=500, upload_to='', default='/media/web/your-logo-here.png')
