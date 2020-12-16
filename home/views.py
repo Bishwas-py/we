@@ -10,47 +10,16 @@ from school.models import Class
 
 # Create your views here.
 def home(request):
-    # try:
-    username = request.session['username']
-    password = request.session['password']
-    print(f'username: {username}, password: {password}')
-    school_user = authenticate(username=username, password=password)
-    if school_user is not None:
-        login(request, school_user)
-        print('here2')
+    if request.user.is_authenticated:
+        class_data = Class.objects.filter(connect_school=request.user)
+        context = {'Class':class_data}
+        return render(request, "themes/dashboard.html", context)
+    else:
+        return render(request, "home/home.html")
 
-        dictonary_to_pass ={
-            'Class':Class.objects.filter(
-                connect_school=school_user,
-            ),
-            'School': school_user[0],
-
-        }
-        return render(request, "themes/dashboard.html", dictonary_to_pass)
-    # except:
-    #     return render(request,'home/home.html')
-        
 
 def login(request):
-    return render(request,'home/login.html')
+    return redirect('accounts/log-in')
+
 def register(request):
-    return render(request,'home/signin.html')
-
-
-
-def max_nepali_day(request):
-    from modules.getting_days import get_max_np_day
-    year, month = request.GET['year'], request.GET['month']
-    realMaxDate = {get_max_np_day(year, month)}
-    print(realMaxDate)
-    return HttpResponse(realMaxDate)
-
-
-def todaydate(request):
-    import nepali_datetime
-    date = str(nepali_datetime.date.today()).split('-')
-    date = {'year':date[0],'month':date[1], 'day':date[2]}
-    return JsonResponse(date)
-
-def website(request):
-    return render(request,'index.html')
+    return redirect('accounts/register')

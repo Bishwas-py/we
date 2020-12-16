@@ -30,27 +30,30 @@ def addclass(request):
         return HttpResponse(0) # 0 means false i.e NONSENSE
 
 def automatic_class(request):
-    create_class = ['Nursery','L.K.G','U.K.G','Kindergarten']+["Class "+ str(i) for i in range(1, 11)]
-    username = request.session['username']
-    password = request.session['password']
-    already_created = []
+    # already_created = []
     if request.method == 'POST':
-        school_data = School.objects.get(username=username, password=password)
-        for class_ in create_class:
-            if not Class.objects.filter(connect_school=school_data,class_list=class_):
-                class_data = Class(connect_school=school_data, class_list=class_)
-                class_data.save()
-            else:
-                already_created.append(class_)
-        if len(already_created) == len(create_class):
+        required_classes = ['Nursery','L.K.G','U.K.G','Kindergarten']+["Class "+ str(i) for i in range(1, 11)]
+    
+        array_of_class = []
+        
+        if Class.objects.filter(connect_school=request.user):
             required_dict = {
                 'success_value':'primary',
                 'success_message':f"Classes are already created.",
                 'success_body':f"The class are already created. You can procced to next step.",
                 'success_remarks':'Success'
                 }
+            
             return JsonResponse(required_dict)
+
         else:
+            
+            for class_data in required_classes:
+                array_of_class.append(Class(
+                    connect_school=request.user,
+                    class_list=class_data
+                ))
+            Class.objects.bulk_create(array_of_class)
             required_dict = {
                 'success_value':'success',
                 'success_message':f"Classes created automatically",
@@ -58,6 +61,8 @@ def automatic_class(request):
                 'success_remarks':'Success'
                 }
             return JsonResponse(required_dict)
+            
+            
     else:
         return HttpResponse(0)
         

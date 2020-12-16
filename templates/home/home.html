@@ -19,11 +19,14 @@
     <!--      LOG INTO SCHOOL HERE         -->
     <div class="container login-container">
         <div class="row">
-                <!-- LOGIN logs a School User -->
-                {% include 'home/login.html' %}
-
-                <!-- SIGN-IN adds a School -->
-                {% include 'home/signin.html' %}
+               <div class="col-sm">
+                   <a href='/log-in' class="btn btn-success">
+                       LOGIN
+                   </a>
+                   <a href='/register' class="btn btn-success">
+                       REGISTER
+                   </a>
+               </div>
         </div>
     </div>
 </div>

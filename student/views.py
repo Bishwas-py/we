@@ -80,27 +80,19 @@ def update_student(request, short_name):
 
 
 def student(request):
-    username=request.session['username']
-    password=request.session['password']
-    school_data = School.objects.get(username=username, password=password)
-    Classes = Class.objects.filter(connect_school=school_data)
-    student_data = Student.objects.filter(connect_school=school_data)
+    Classes = Class.objects.filter(connect_school=request.user)
+    student_data = Student.objects.filter(connect_school=request.user)
     required_dict = {
-        'School':school_data,
         'Class':Classes,
         'Student':student_data
     }
-
     return render(request, 'themes/students.html', required_dict)
 
 
 
 def student_profile(request, short_name):
-    username=request.session['username']
-    password=request.session['password']
-    school_data = School.objects.get(username=username, password=password)
-    Class_data = Class.objects.filter(connect_school=school_data)
-    student_data = Student.objects.filter(connect_school=school_data, short_name=short_name)
+    Class_data = Class.objects.filter(connect_school=request.user)
+    student_data = Student.objects.filter(connect_school=request.user, short_name=short_name)
     required_dict = {
         'School':school_data,
         'Class':Class_data,
@@ -110,25 +102,13 @@ def student_profile(request, short_name):
     return render(request, 'themes/more_info_student.html', required_dict)
 
 def add_student(request):
-    username=request.session['username']
-    password=request.session['password']
-
-    from student.models import Student
-    from school.models import Class
-    from accounts.models import School
-
     if request.method == 'POST':
-        school_data = School.objects.get(
-                    username=username,
-                    password=password
-        )
-        class_ = request.POST.get('class')
+        class_data = request.POST.get('class')
         name = request.POST.get('name').rstrip()
         gender = request.POST.get('gender')
         ethnicity=request.POST.get('ethnicity')
-        print('name', name)
         try:
-            class_list=Class.objects.get(connect_school=school_data, class_list=class_)
+            class_list=Class.objects.get(connect_school=request.user, class_list=class_data)
         except:
             required_dict = {
                 'success_value':'danger',
@@ -224,17 +204,11 @@ def add_student(request):
             }
         return JsonResponse(required_dict)
     elif request.method == 'GET':
-        from school.models import Class
-        from student.models import Student
-        from accounts.models import School
-
-        school_data = School.objects.get(username=username, password=password)
         gender = Student.gender_choices
         ethnicity = Student.ethnic_groups
-        Classes = Class.objects.filter(connect_school=school_data)
+        Classes = Class.objects.filter(connect_school=request.user)
         return render(request, 'themes/add_student.html', {
             'Class':Classes,
-            'School':school_data,
             'gender':gender,
             'ethnicity':ethnicity
             })

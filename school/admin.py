@@ -10,6 +10,13 @@ class StudentClassAdmin(admin.ModelAdmin):
     list_display = ('class_list','connect_school',)
 admin.site.register(Class, StudentClassAdmin)
 
+class ClassInline(admin.TabularInline):
+    model = Class
+
+class SchoolAdmin(admin.ModelAdmin):
+    inlines = [
+        ClassInline,
+    ]
 
 # class StudentSubjectAdmin(admin.ModelAdmin):
 #     fieldsets = ((None, {'fields': [
