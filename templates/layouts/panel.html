@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  {% include 'layouts/global_meta.html' %}
+  {% include 'foot_head/head.html' %}
 </head>
 
 <body id="page-top">
@@ -54,18 +54,7 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-
-
-
-  <!-- Page level plugins -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-  <script src="{% static 'layouts/js/chart_data/datatables-demo.js' %}"></script>
-  <script src="{% static 'layouts/js/chart_data/chart-bar-demo.js' %}"></script>
-  <!-- Page level custom scripts -->
-  <script src="{% static 'layouts/js/chart_data/chart-area-demo.js' %}"></script>
-  <script src="{% static 'layouts/js/chart_data/chart-pie-demo.js' %}"></script>
-
   {% include "apps/toast.html" %}
 </body>
-
+{% include "foot_head/foot.html" %}
 </html>

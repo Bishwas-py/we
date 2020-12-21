@@ -1,4 +1,4 @@
-{% extends 'home/initials.base.html' %}
+{% extends 'home/home.base.html' %}
 {% block content %}
 <div class="card o-hidden border-0 shadow-lg my-5">
     <div class="card-body p-0">
@@ -10,7 +10,7 @@
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                     </div>
-                    <form class='user' action="/accounts/sign-in" method="POST">
+                    <form class='user' action="{% url 'register' %}" method="POST">
                         {% csrf_token %}
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
@@ -60,10 +60,10 @@
                             Register Account
                         </button>
                         <hr>
-                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                        <a href="#" class="btn btn-google btn-user btn-block">
                             <i class="fab fa-google fa-fw"></i> Register with Google
                         </a>
-                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                        <a href="#" class="btn btn-facebook btn-user btn-block">
                             <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                         </a>
                     </form>

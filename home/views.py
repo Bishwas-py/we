@@ -17,22 +17,20 @@ def home(request):
     else:
         return render(request, "home/home.html")
 
-<<<<<<< HEAD
 
 def login(request):
     return redirect('accounts/log-in')
 
 def register(request):
     return redirect('accounts/register')
-=======
-        dictonary_to_pass = {
-            'Class': Class.objects.filter(
-                connect_school=school_user,
-            ),
-            'School': school_user[0],
+    dictonary_to_pass = {
+        'Class': Class.objects.filter(
+            connect_school=school_user,
+        ),
+        'School': school_user[0],
 
-        }
-        return render(request, "themes/dashboard.html", dictonary_to_pass)
+    }
+    return render(request, "themes/dashboard.html", dictonary_to_pass)
     # except:
     #     return render(request,'home/home.html')
 
@@ -54,4 +52,4 @@ def todaydate(request):
 
 def website(request):
     return render(request, 'index.html')
->>>>>>> 2ead9db9503d20ce0112d399f05588fb12326618
+

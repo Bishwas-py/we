@@ -30,8 +30,10 @@
 
 
   }
+  var not_executed = true;
 
   function automatic_class() {
+    if (not_executed){
       $.ajax({
           url: '/school/auto-class-create',
           type: 'post',
@@ -47,10 +49,11 @@
                   $(option).html(class_list[i]);
                   $("#class").append(option);
                   $("#class").val(class_list[i]);
-                  console.log('Did we worked')
-                  
+
               }
+              not_executed = false;
               show_toast(data);
           }
       })
+    }
   }

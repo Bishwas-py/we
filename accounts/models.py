@@ -17,7 +17,7 @@ class School(AbstractUser):
     student_number = models.IntegerField(default=0)  # number of student
     school_website = models.URLField(max_length=200, default='')
     user_ip = models.CharField(max_length=95)
-    logo = models.ImageField(max_length=500, upload_to='', default='/media/web/your-logo-here.png')
+    logo = models.ImageField(max_length=500, upload_to='', default='web/your-logo-here.png')
 
     def __str__(self):
         return self.school_name

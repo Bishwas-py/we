@@ -1,3 +1,5 @@
+from django.http import HttpResponse, JsonResponse
+
 
 def max_nepali_day(request):
     from modules.getting_days import get_max_np_day

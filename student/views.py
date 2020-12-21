@@ -40,75 +40,43 @@ def delete(request, short_name):
 
 
 def update_student(request, short_name):
-    username = request.session['username']
-    password=request.session['password']
     student_data = Student.objects.get(
-        username=username,
-        password=password,
-        short_name=short_name)
+        connect_school=request.user,
+        short_name=short_name
+    )
 
-    try:
-        cLass = Class.objects.get(
-            username=username, 
-            password=password, 
-            short_name=short_name)
-    except:
-        None
-    
-    student_address = request.POST.get(f'{student_data.short_name}1')
-    Class = request.POST.get(f'{student_data.short_name}2')
-    student_fam_occupation = request.POST.get(f'{student_data.short_name}3')
-    student_phone_num = request.POST.get(f'{student_data.short_name}4')
-    stpht = request.FILES.get(f'{student_data.short_name}5')
-    if stadd != None:
-        student_data.stadd = stadd
-        student_data.save()
-    if Classls != None:
-        cLass.cList = Classls
-        student_data.save()
-    if stfo != None:
-        student_data.stfo = stfo
-        student_data.save()
-    if stpnum != None:
-        student_data.stpnum = stpnum
-        student_data.save()
-    if stpht != None:
-        student_data.stpht.delete(save=True)
-        student_data.stpht = stpht
-        student_data.save()
     return redirect('student')
 
 
-def student(request):
-    Classes = Class.objects.filter(connect_school=request.user)
+def student_table(request):
+    class_data = Class.objects.filter(connect_school=request.user)
     student_data = Student.objects.filter(connect_school=request.user)
     required_dict = {
-        'Class':Classes,
-        'Student':student_data
+        'Class': class_data,
+        'Student': student_data
     }
     return render(request, 'themes/students.html', required_dict)
 
 
-
 def student_profile(request, short_name):
-    Class_data = Class.objects.filter(connect_school=request.user)
+    class_data = Class.objects.filter(connect_school=request.user)
     student_data = Student.objects.filter(connect_school=request.user, short_name=short_name)
     required_dict = {
-        'School':school_data,
-        'Class':Class_data,
-        'Student':student_data
+        'School': request.user,
+        'Class': class_data,
+        'Student': student_data
     }
-
     return render(request, 'themes/more_info_student.html', required_dict)
+
 
 def add_student(request):
     if request.method == 'POST':
         class_data = request.POST.get('class')
         name = request.POST.get('name').rstrip()
         gender = request.POST.get('gender')
-        ethnicity=request.POST.get('ethnicity')
+        ethnicity = request.POST.get('ethnicity')
         try:
-            class_list=Class.objects.get(connect_school=request.user, class_list=class_data)
+            class_list = Class.objects.get(connect_school=request.user, class_list=class_data)
         except:
             required_dict = {
                 'success_value':'danger',
@@ -152,7 +120,7 @@ def add_student(request):
             return JsonResponse(required_dict)
         print('subject::: ', subject)
         is_student_created = Student.objects.filter(
-                connect_school=school_data,
+                connect_school=request.user,
                 name=name,
                 Class=class_list,
                 mother=mother,
@@ -169,7 +137,7 @@ def add_student(request):
             return JsonResponse(required_dict)
 
         student_data = Student(
-            connect_school=school_data,
+            connect_school=request.user,
             name = name,
             gender=gender,
             ethnicity=ethnicity,

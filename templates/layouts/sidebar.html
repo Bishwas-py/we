@@ -50,8 +50,8 @@
     <div id="collapseStudent" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Students Details:</h6>
-        <a class="collapse-item" href="/student/student">Our Students</a>
-        <a class="collapse-item" href="/student/add-student">Add Students</a>
+        <a class="collapse-item" href="{% url 'student_table' %}">Our Students</a>
+        <a class="collapse-item" href="{% url 'add_student' %}">Add Students</a>
         <a class="collapse-item" href="utilities-animation.html">Animations</a>
         <a class="collapse-item" href="utilities-other.html">Other</a>
       </div>
@@ -119,8 +119,6 @@
 
   <!-- Sidebar Toggler (Sidebar) -->
   <div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle" onclick='siderBarToggler()'></button>
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
   </div>
-
-
 </ul>
