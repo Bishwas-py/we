@@ -16,5 +16,5 @@ def settings(request):
             connect_school=request.user
         )
     }
-    return render(request, "themes/settings.html", required_dictionary)
+    return render(request, "contents/settings.html", required_dictionary)
 

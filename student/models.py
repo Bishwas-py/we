@@ -1,16 +1,19 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 import nepali_datetime
-from school.models import Class, Subject
 from accounts.models import School
+from school.models import Class, Subject, MarksReport
 
 # Create your models here.
 class Student(models.Model):
     connect_school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
     # School = models.ForeignKey(schoolDetails, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, null=True)
-    gender_choices = [('m','Male'), ('f','Female'),('o','Others')]
+    gender_choices = [('m', 'Male'), ('f', 'Female'), ('o', 'Others')]
     gender = models.CharField(max_length=9, choices=gender_choices, default='1')
+    roll_num = models.IntegerField(null=True, blank=True)
 
     ethnic_groups = [('brah','Brahmin'), ('cht','Chhetri'), ('jj', 'Janajati'), ('dl', 'Dalit'), ('md','Madhesi')]
     ethnicity = models.CharField(max_length=9, choices=ethnic_groups, default='1')
@@ -33,9 +36,14 @@ class Student(models.Model):
     photo = models.ImageField(max_length=500, upload_to='', default='/media/web/')
 
     subject = models.ManyToManyField(Subject)
+    marks_report = models.ForeignKey(MarksReport, on_delete=models.SET_NULL, null=True)
 
-    #(""), upload_to=None, height_field=None, width_field=None,
-    
     def __str__(self):
         return self.name
-#datetime.datetime(2020, 6, 25, 2, 33, 57, 858649, tzinfo=<UTC>)
+
+
+@receiver(post_save, sender=Student)
+def populate_roll_num(sender, instance, created, **kwargs):
+    if created:
+        instance.roll_num = instance.id
+        instance.save()

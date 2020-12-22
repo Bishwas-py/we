@@ -13,7 +13,7 @@ def home(request):
     if request.user.is_authenticated:
         class_data = Class.objects.filter(connect_school=request.user)
         context = {'Class':class_data}
-        return render(request, "themes/dashboard.html", context)
+        return render(request, "contents/dashboard.html", context)
     else:
         return render(request, "home/home.html")
 
@@ -30,7 +30,7 @@ def register(request):
         'School': school_user[0],
 
     }
-    return render(request, "themes/dashboard.html", dictonary_to_pass)
+    return render(request, "contents/dashboard.html", dictonary_to_pass)
     # except:
     #     return render(request,'home/home.html')
 

@@ -1,7 +1,7 @@
 {% extends 'layouts/panel.html' %} {% load static %} {% block content %}
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <h6 class="m-0 font-weight-bold text-primary">{{ School.school_name }}'s students.</h6>
     </div>
     <div class="card-body">
         {% if already_created %}
@@ -78,10 +78,12 @@
                                 {% for student in Student %}
                                 <tr role="row" class="even">
                                     <td>
+                                        {% if student.photo %}
                                         <img src="{{student.photo.url}}" style="width: 63px"
                                             alt="{{student.name}}: {{student.photo.size}}Bytes"
                                             title="{{student.name}}" />
                                         <span class="d-none">{{student.photo.size}}</span>
+                                        {% endif %}
                                     </td>
                                     <td class="sorting_1"><a href='/student/profile/{{student.short_name}}' target="_blank">{{student.name}}</a></td>
                                     <td>{{student.address}}</td>

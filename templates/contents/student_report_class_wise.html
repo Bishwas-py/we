@@ -1,0 +1,99 @@
+{% extends 'layouts/panel.html' %}
+{% load static %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ Class.class_name }}</h6>
+    </div>
+    <div class="card-body">
+        <form id='{% url "student_report_class_wise" class_=Class.class_name %}' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <select class="custom-select col-md-3" name="student" id="student" required>
+                    <option disabled selected value="">Choose Student</option>
+                    {% for student in Student  %}
+                    <option value='{{student.short_name}}'>{{student.name}}</option>
+                    {% endfor %}
+                </select>
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                            role="grid" aria-describedby="dataTable_info" style="width: 100%">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Photo: activate to sort column ascending" style="width: 21px">
+                                        Subject
+                                    </th>
+                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                        colspan="1" aria-sort="ascending"
+                                        aria-label="Name: activate to sort column descending" style="width: 58px">
+                                        F.M.
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Address: activate to sort column ascending" style="width: 31px">
+                                        P.M.
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                        aria-label="Start date: activate to sort column ascending" style="width: 68px">
+                                        O.M.
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th rowspan="1" colspan="1">Subject</th>
+                                    <th rowspan="1" colspan="1">F.M.</th>
+                                    <th rowspan="1" colspan="1">P.M.</th>
+                                    <th rowspan="1" colspan="1">O.M.</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for subject in Subject  %}
+                                {% for sub in subject.subject.all %}
+                                    <tr>
+                                        <td>{{sub.sub}}</td> <!-- Subject -->
+                                        <td><input name="{{ sub.sub }}_fm"
+
+                                                   type="number" {% if MarksReport %}disabled{% endif %}>
+                                        </td> {# F.M. #}
+
+                                        <td>
+                                            <input name="{{ sub.sub }}_pm"
+                                                   type="number" {% if MarksReport %}disabled{% endif %}>
+                                        </td> {# P.M. #}
+                                        <td>
+
+                                            <input name="{{ sub.sub }}" type="number">
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            <button type="submit" role="button" class="btn btn-primary btn-block col-sm-2 d-inline-block">
+                Submit
+            </button>
+            <a href="{% url 'student_report' %}" class="btn btn-danger btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-window-close"></i>
+                </span>
+                <span class="text">Close</span>
+            </a>
+        </form>
+    </div>
+</div>
+{#<script src="{% static 'student/js/add-class.ajax.js' %}"></script>#}
+{#<script src="{% static 'student/js/add-student.ajax.js' %}"></script>#}
+    <script>
+
+    </script>
+{% endblock %}

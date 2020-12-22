@@ -6,27 +6,16 @@ from student.models import Student
 # Create your views here.
 
 
-def profile(request):
-    username= request.session['username']
-    password=request.session['password']
-    return render(request, "settings/profile.html", {'stc':stdClass.objects.filter(username=username, password=password), 'sdata': schoolDetails.objects.get(username=username, password=password)})
-
-
 def add_class(request):
-    username = request.session['username']
-    password = request.session['password']
-    
     get_class = request.POST.get('class')
-    class_list = ["Grade " + str(i) for i in range(1, 13)] +\
+    class_name = ["Grade " + str(i) for i in range(1, 13)] +\
                  ["Class " + str(i) for i in range(1, 13)] +\
                  [str(i) for i in range(1, 13)] +\
                  ['Montessori', 'Nursery', 'L.K.G', 'U.K.G', 'Kindergarten', 'Kinder Garten', 'K.G']
-    
-    school_data = School.objects.get(username=username, password=password)
 
-    if get_class in class_list:
-        if not Class.objects.filter(connect_school=school_data, class_list=get_class):
-            class_data = Class(connect_school=school_data, class_list=get_class)
+    if get_class in class_name:
+        if not Class.objects.filter(connect_school=request.user, class_name=get_class):
+            class_data = Class(connect_school=request.user, class_name=get_class)
             class_data.save()
             return HttpResponse(get_class)
         else:
@@ -40,7 +29,7 @@ def add_subject(request):
         get_class = request.POST.get('class')
         get_subjects = request.POST.get('subject').split(',')
 
-        class_data = Class.objects.get(class_list=get_class, connect_school=request.user)
+        class_data = Class.objects.get(class_name=get_class, connect_school=request.user)
 
         subjects_array = list()
         for sub in get_subjects:
@@ -51,7 +40,7 @@ def add_subject(request):
             subjects_array.append(is_sub)
 
         class_data = Class.objects.get(
-            class_list=get_class,
+            class_name=get_class,
             connect_school=request.user
         )
 

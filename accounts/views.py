@@ -26,8 +26,7 @@ def dashboard(request):
         'Class':class_data,
         'Student':student_data
     }
-    return render(request, 'themes/dashboard.html', required_dict)
-
+    return render(request, 'contents/dashboard.html', required_dict)
 
 
 def log_in(request):
@@ -147,7 +146,7 @@ def delete_account(request):
                 username=request.session['username']
                 )
         }
-        return render(request, "themes/profile.html", render_required_dictonary)
+        return render(request, "contents/profile.html", render_required_dictonary)
 
 
 def update(request):
@@ -194,14 +193,12 @@ def log_out(request):
 
 
 def profile(request):
-    render_required_dictonary = {
-    'Class':Class.objects.filter(
-        connect_school=request.user
-    ),
-}
-    return render(request, "themes/profile.html", render_required_dictonary)
-
-
+    context = {
+        'Class': Class.objects.filter(
+            connect_school=request.user
+        ),
+    }
+    return render(request, "contents/profile.html", context)
 
 
 def log_in(request):

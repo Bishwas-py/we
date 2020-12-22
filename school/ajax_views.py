@@ -18,7 +18,7 @@ def automatic_class(request):
             for class_data in required_classes:
                 array_of_class.append(Class(
                     connect_school=request.user,
-                    class_list=class_data
+                    class_name=class_data
                 ))
             Class.objects.bulk_create(array_of_class)
             required_dict = {

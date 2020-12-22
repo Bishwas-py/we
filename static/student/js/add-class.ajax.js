@@ -40,12 +40,12 @@
             },
           success: function (data) {
               if (data == 1) {
-                  class_list = ['Nursery', 'L.K.G', 'U.K.G', 'Kindergarten', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10']
-                  for (i = 0; i < class_list.length; i++) {
+                  class_name = ['Nursery', 'L.K.G', 'U.K.G', 'Kindergarten', 'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10']
+                  for (i = 0; i < class_name.length; i++) {
 
-                      var option = new Option(class_list[i], class_list[i]);
+                      var option = new Option(class_name[i], class_name[i]);
                       /// jquerify the DOM object 'o' so we can use the html method
-                      $(option).html(class_list[i]);
+                      $(option).html(class_name[i]);
                       $("#student_class").append(option);
 
                   }
